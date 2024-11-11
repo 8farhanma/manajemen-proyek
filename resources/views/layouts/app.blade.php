@@ -8,8 +8,10 @@
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-circle.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" />
@@ -22,7 +24,7 @@
             margin: 0;
             overflow: hidden;
             background-color: rgb(241 245 249);
-            font-family: "Noto Sans", sans-serif !important; 
+            font-family: "Noto Sans", sans-serif !important;
         }
 
         .btn {
@@ -196,8 +198,7 @@
         </main>
         <footer class="mt-auto py-3 text-center">
             <div class="container">
-                <span class="text-muted">&copy; {{ date('Y') }} Task Manager | Developed by <a
-                        href="https://github.com/arafat-web" target="_blank">Arafat Hossain Ar</a> </span>
+                <span class="text-muted">&copy; {{ date('Y') }} Task Manager </span>
             </div>
         </footer>
     </div>
@@ -208,7 +209,11 @@
             const now = new Date();
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             const day = dayNames[now.getDay()];
-            const date = now.toLocaleDateString(['en-US'], { day: 'numeric', month: 'long', year: 'numeric' });
+            const date = now.toLocaleDateString(['en-US'], {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
             const time = now.toLocaleTimeString();
 
             document.getElementById('currentDateTime').innerText = `${day}, ${date}  ${time}`;
