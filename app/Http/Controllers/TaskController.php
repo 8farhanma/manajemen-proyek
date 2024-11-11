@@ -11,7 +11,7 @@ class TaskController extends Controller
     public function index(Project $project)
     {
         $tasks = $project->tasks()->get()->groupBy('status');
-        $users = $project->users()->get();  
+        $users = $project->users()->get();
         return view('tasks.index', compact('project', 'tasks', 'users'));
     }
 
@@ -42,7 +42,7 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
             'priority' => 'required|in:low,medium,high',
-            'status' => 'required|in:to_do,in_progress,completed',
+            'status' => 'required|in:perencanaan,pembuatan,pengeditan,peninjauan,publikasi',
         ]);
 
         $task->update($request->all());

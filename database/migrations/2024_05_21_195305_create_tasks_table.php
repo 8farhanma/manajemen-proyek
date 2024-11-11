@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('due_date')->nullable();
             $table->enum('priority', ['low', 'medium', 'high']);
-            $table->enum('status', ['to_do', 'in_progress', 'completed'])->default('to_do');
+            $table->enum('status', ['perencanaan', 'pembuatan', 'pengeditan', 'peninjauan', 'publikasi'])->default('perencanaan');
             $table->timestamps();
         });
     }

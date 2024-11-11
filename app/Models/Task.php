@@ -31,11 +31,15 @@ class Task extends Model
     public function getStatusColorAttribute()
     {
         switch ($this->status) {
-            case 'to_do':
-                return 'primary';
-            case 'in_progress':
-                return 'warning';
-            case 'completed':
+            case 'perencanaan':
+                return 'success';
+            case 'pembuatan':
+                return 'success';
+            case 'pengeditan':
+                return 'success';
+            case 'peninjauan':
+                return 'success';
+            case 'publikasi':
                 return 'success';
             default:
                 return 'secondary';

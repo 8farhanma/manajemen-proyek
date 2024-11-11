@@ -24,12 +24,16 @@
                                         class="badge {{ $task->priority == 'low' ? 'bg-success' : ($task->priority == 'medium' ? 'bg-warning' : 'bg-danger') }}">{{ ucfirst($task->priority) }}</span>
                                 </p>
                                 <p class="card-text"><strong>Status:</strong>
-                                    @if ($task->status == 'completed')
-                                        <span class="badge bg-success">Completed</span>
-                                    @elseif($task->status == 'to_do')
-                                        <span class="badge bg-primary">To Do</span>
-                                    @elseif($task->status == 'in_progress')
-                                        <span class="badge bg-warning">In Progress</span>
+                                    @if ($task->status == 'publikasi')
+                                        <span class="badge bg-success">Publikasi</span>
+                                    @elseif($task->status == 'perencanaan')
+                                        <span class="badge bg-primary">Perencanaan</span>
+                                    @elseif($task->status == 'pembuatan')
+                                        <span class="badge bg-warning">Pembuatan</span>
+                                    @elseif($task->status == 'pengeditan')
+                                        <span class="badge bg-warning">Pengeditan</span>
+                                    @elseif($task->status == 'peninjauan')
+                                        <span class="badge bg-warning">Peninjauan</span>
                                     @endif
                                 </p>
 
@@ -214,11 +218,16 @@
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" id="status" class="form-select" required>
-                                    <option value="to_do" {{ $task->status == 'to_do' ? 'selected' : '' }}>To Do</option>
-                                    <option value="in_progress" {{ $task->status == 'in_progress' ? 'selected' : '' }}>In
-                                        Progress</option>
-                                    <option value="completed" {{ $task->status == 'completed' ? 'selected' : '' }}>
-                                        Completed</option>
+                                    <option value="perencanaan" {{ $task->status == 'perencanaan' ? 'selected' : '' }}>
+                                        Perencanaan</option>
+                                    <option value="pembuatan" {{ $task->status == 'pembuatan' ? 'selected' : '' }}>
+                                        Pembuatan</option>
+                                    <option value="pengeditan" {{ $task->status == 'pengeditan' ? 'selected' : '' }}>
+                                        Pengeditan</option>
+                                    <option value="peninjauan" {{ $task->status == 'peninjauan' ? 'selected' : '' }}>
+                                        Peninjauan</option>
+                                    <option value="publikasi" {{ $task->status == 'publikasi' ? 'selected' : '' }}>
+                                        Publikasi</option>
                                 </select>
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>

@@ -10,12 +10,16 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Auth::user()->projects()->withCount(['tasks as to_do_tasks' => function ($query) {
-            $query->where('status', 'to_do');
-        }, 'tasks as in_progress_tasks' => function ($query) {
-            $query->where('status', 'in_progress');
-        }, 'tasks as completed_tasks' => function ($query) {
-            $query->where('status', 'completed');
+        $projects = Auth::user()->projects()->withCount(['tasks as perencanaan_tasks' => function ($query) {
+            $query->where('status', 'perencanaan');
+        }, 'tasks as pembuatan_tasks' => function ($query) {
+            $query->where('status', 'pembuatan');
+        }, 'tasks as pengeditan_tasks' => function ($query) {
+            $query->where('status', 'pengeditan');
+        }, 'tasks as peninjauan_tasks' => function ($query) {
+            $query->where('status', 'peninjauan');
+        }, 'tasks as publikasi_tasks' => function ($query) {
+            $query->where('status', 'publikasi');
         }])->get();
 
         return view('projects.index', compact('projects'));
@@ -82,7 +86,7 @@ class ProjectController extends Controller
             'project_id' => 'required|exists:projects,id',
             'user_id' => 'required|exists:users,id',
         ]);
-       
+
         $project = Project::find($request->project_id);
         $project->teamProjects()->attach($request->user_id);
         return redirect()->back()->with('success', 'User added successfully.');
