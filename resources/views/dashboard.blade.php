@@ -5,15 +5,15 @@
 @section('content')
     <div class="container">
         <h2>Welcome to your Dashboard</h2>
-        <p>This is your dashboard where you can manage your tasks, routines, notes, and files.</p>
+        <p>This is your dashboard where you can manage your Data Konten, routines, notes, and files.</p>
 
         <div class="row mb-4">
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Tasks</h5>
-                        <p class="card-text flex-grow-1">You have <strong>{{ $tasksCount }}</strong> tasks pending.</p>
-                        <a href="{{ route('tasks.index') }}" class="btn btn-primary mt-auto">View Tasks</a>
+                        <h5 class="card-title">Data Konten</h5>
+                        <p class="card-text flex-grow-1">You have <strong>{{ $tasksCount }}</strong> Content pending.</p>
+                        <a href="{{ route('tasks.index') }}" class="btn btn-primary mt-auto">View Content</a>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
             <div class="col-md-6 mb-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Recent Tasks</h5>
+                        <h5 class="card-title">Recent Content</h5>
                         <ul class="list-group flex-grow-1">
                             @foreach ($recentTasks as $task)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">

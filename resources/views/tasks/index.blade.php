@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tasks
+    Data Konten
 @endsection
 @section('content')
     <style>
@@ -27,7 +27,7 @@
         }
     </style>
     <div class="container">
-        <h2 class="mb-4">Tasks</h2>
+        <h2 class="mb-4">Data Konten</h2>
 
         @if (session('success'))
             <div class="alert alert-success">
