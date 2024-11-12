@@ -40,6 +40,19 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="user_id" class="form-label">Assign To</label>
+                <select name="user_id" id="user_id" class="form-select">
+                    <option value="{{ auth()->user()->id }}">Self</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                @error('user_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <input type="hidden" name="status" id="task_status" value="perencanaan">
             <button type="submit" class="btn btn-primary">Create Task</button>
         </form>
     </div>

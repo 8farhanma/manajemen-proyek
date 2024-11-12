@@ -11,6 +11,7 @@
                 {{ session('success') }}
             </div>
         @endif
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-4 shadow-sm">
@@ -24,24 +25,19 @@
                                         class="badge {{ $task->priority == 'low' ? 'bg-success' : ($task->priority == 'medium' ? 'bg-warning' : 'bg-danger') }}">{{ ucfirst($task->priority) }}</span>
                                 </p>
                                 <p class="card-text"><strong>Status:</strong>
-                                    @if ($task->status == 'publikasi')
-                                        <span class="badge bg-success">Publikasi</span>
-                                    @elseif($task->status == 'perencanaan')
-                                        <span class="badge bg-primary">Perencanaan</span>
-                                    @elseif($task->status == 'pembuatan')
-                                        <span class="badge bg-warning">Pembuatan</span>
-                                    @elseif($task->status == 'pengeditan')
-                                        <span class="badge bg-warning">Pengeditan</span>
-                                    @elseif($task->status == 'peninjauan')
-                                        <span class="badge bg-warning">Peninjauan</span>
-                                    @endif
+                                    <span
+                                        class="badge {{ $task->status == 'publikasi' ? 'bg-success' : ($task->status == 'perencanaan' ? 'bg-primary' : 'bg-warning') }}">{{ ucfirst($task->status) }}</span>
                                 </p>
 
-                                <p class="card-text"><strong>Assign To:</strong> {{ $task->user->name }}</p>
+                                @if ($task->user)
+                                    <p class="card-text"><strong>Assign To:</strong> {{ $task->user->name }}</p>
+                                @else
+                                    <p class="card-text"><strong>Assign To:</strong> User not found</p>
+                                @endif
 
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#editTaskModal"> <i class="bi bi-pencil-square"></i> </button>
-                                <a href="{{ route('projects.tasks.index', $task->project->id) }}" class="btn btn-secondary">
+                                <a href="{{ route('tasks.index') }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-90deg-left"></i> </a>
                             </div>
 
@@ -88,49 +84,8 @@
                                                         class="bi bi-trash"></i></button>
                                             </div>
                                         </li>
-
-                                        <!-- Edit Checklist Modal -->
                                     @endforeach
                                 </ul>
-                                {{-- <div class="modal fade" id="editChecklistModal-{{ $item->id }}" tabindex="-1"
-                                        aria-labelledby="editChecklistModalLabel-{{ $item->id }}"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form id="edit-checklist-form-{{ $item->id }}"
-                                                    action="{{ route('checklist-items.update', $item->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="editChecklistModalLabel-{{ $item->id }}">Edit
-                                                            Checklist Item</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="mb-3">
-                                                            <label for="checklist-name-{{ $item->id }}"
-                                                                class="form-label">Item Name</label>
-                                                            <input type="text" name="name"
-                                                                id="checklist-name-{{ $item->id }}"
-                                                                class="form-control" value="{{ $item->name }}"
-                                                                required>
-                                                            <div class="invalid-feedback"
-                                                                id="checklist-name-error-{{ $item->id }}"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Update
-                                                            Item</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                             </div>
                         </div>
                     </div>

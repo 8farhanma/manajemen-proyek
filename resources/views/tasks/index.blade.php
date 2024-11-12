@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ $project->name }} - Tasks
+    Tasks
 @endsection
 @section('content')
     <style>
@@ -27,9 +27,7 @@
         }
     </style>
     <div class="container">
-        <div class="bg-white align-items-center mb-4 shadow-sm p-3 rounded">
-            <h2 class="text-center">{{ $project->name }} - Tasks</h2>
-        </div>
+        <h2 class="mb-4">Tasks</h2>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -171,7 +169,7 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('projects.tasks.store', $project->id) }}" method="POST">
+                    <form action="{{ route('tasks.store') }}" method="POST">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title" id="createTaskModalLabel">Create Task</h5>
@@ -223,7 +221,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <input type="hidden" name="status" id="task_status">
+                            <input type="hidden" name="status" id="task_status" value="perencanaan">
 
                         </div>
                         <div class="modal-footer">

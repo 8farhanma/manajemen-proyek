@@ -39,6 +39,31 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="user_id" class="form-label">Assign To</label>
+                <select name="user_id" id="user_id" class="form-select">
+                    <option value="{{ $task->user_id }}">{{ $task->user->name }}</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                @error('user_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select name="status" id="status" class="form-select" required>
+                    <option value="perencanaan" {{ $task->status == 'perencanaan' ? 'selected' : '' }}>Perencanaan</option>
+                    <option value="pembuatan" {{ $task->status == 'pembuatan' ? 'selected' : '' }}>Pembuatan</option>
+                    <option value="pengeditan" {{ $task->status == 'pengeditan' ? 'selected' : '' }}>Pengeditan</option>
+                    <option value="peninjauan" {{ $task->status == 'peninjauan' ? 'selected' : '' }}>Peninjauan</option>
+                    <option value="publikasi" {{ $task->status == 'publikasi' ? 'selected' : '' }}>Publikasi</option>
+                </select>
+                @error('status')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
             <button type="submit" class="btn btn-primary">Update Task</button>
         </form>
     </div>

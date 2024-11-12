@@ -1,21 +1,22 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function index(Project $project)
+    public function index()
     {
-        $tasks = $project->tasks()->get()->groupBy('status');
-        $users = $project->users()->get();
-        return view('tasks.index', compact('project', 'tasks', 'users'));
+        $tasks = Task::all()->groupBy('status');
+        $users = User::all();
+
+        return view('tasks.index', compact('tasks', 'users'));
     }
 
-    public function store(Request $request, Project $project)
+    public function store(Request $request)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -25,9 +26,9 @@ class TaskController extends Controller
             'priority' => 'required|in:low,medium,high',
         ]);
 
-        $project->tasks()->create($request->all());
+        Task::create($request->all());
 
-        return redirect()->route('projects.tasks.index', $project)->with('success', 'Task created successfully.');
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
     public function show(Task $task)
@@ -47,7 +48,7 @@ class TaskController extends Controller
 
         $task->update($request->all());
 
-        return redirect()->route('projects.tasks.index', $task->project_id)->with('success', 'Task updated successfully.');
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 
     public function updateStatus(Request $request, Task $task)
