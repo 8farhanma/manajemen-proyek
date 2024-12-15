@@ -10,13 +10,15 @@ class ReminderController extends Controller
 {
     public function index()
     {
-        $reminders = Auth::user()->reminders()->latest()->get();
-        return view('reminders.index', compact('reminders'));
+        $reminders = Reminder::all();
+        $remindersByDate = $reminders->groupBy('date');
+        return view('reminders.index', compact('remindersByDate'));
     }
 
     public function create()
     {
-        return view('reminders.create');
+        $selectedDate = request('date') ?? now()->format('Y-m-d');
+        return view('reminders.create', compact('selectedDate'));
     }
 
     public function store(Request $request)
