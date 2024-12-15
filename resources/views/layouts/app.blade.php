@@ -130,11 +130,11 @@
                     <i class="bi bi-folder"></i> Projects
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link {{ request()->is('tasks*') ? 'active' : '' }}" href="{{ route('projects.index') }}">
                     <i class="bi bi-check2-square"></i> Tasks
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('routines*') ? 'active' : '' }}"
                     href="{{ route('routines.index') }}">

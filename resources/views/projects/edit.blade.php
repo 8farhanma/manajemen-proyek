@@ -55,7 +55,7 @@
                         @error('status')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
+                    {{-- </div>
                     <div class="mb-3">
                         <label for="budget" class="form-label">Budget</label>
                         <input type="number" name="budget" id="budget" class="form-control" step="0.01"
@@ -63,7 +63,7 @@
                         @error('budget')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
                     <button type="submit" class="btn btn-primary">Update Project</button>
                 </form>
             </div>

@@ -29,7 +29,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="priority" class="form-label">Priority</label>
                 <select name="priority" id="priority" class="form-select" required>
                     <option value="low">Low</option>
@@ -39,7 +39,7 @@
                 @error('priority')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
             <button type="submit" class="btn btn-primary">Create Task</button>
         </form>
     </div>

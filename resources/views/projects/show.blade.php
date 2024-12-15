@@ -24,7 +24,7 @@
                         <p class="card-text"><strong>Status:</strong>
                             {{ $project->status == 'pending' ? 'Pending' : ($project->status == 'on_going' ? 'In Progress' : 'Completed') }}
                         </p>
-                        <p class="card-text"><strong>Budget:</strong> ${{ $project->budget }}</p>
+                        {{-- <p class="card-text"><strong>Budget:</strong> ${{ $project->budget }}</p> --}}
 
                         <h5 class="mt-4">Project Progress</h5>
                         @php

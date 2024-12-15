@@ -20,9 +20,9 @@
                                 <h5 class="card-title">{{ $task->title }}</h5>
                                 <p class="card-text">{{ $task->description }}</p>
                                 <p class="card-text"><strong>Due Date:</strong> {{ $task->due_date }}</p>
-                                <p class="card-text"><strong>Priority:</strong> <span
+                                {{-- <p class="card-text"><strong>Priority:</strong> <span
                                         class="badge {{ $task->priority == 'low' ? 'bg-success' : ($task->priority == 'medium' ? 'bg-warning' : 'bg-danger') }}">{{ ucfirst($task->priority) }}</span>
-                                </p>
+                                </p> --}}
                                 <p class="card-text"><strong>Status:</strong>
                                     @if ($task->status == 'publikasi')
                                         <span class="badge bg-success">Publikasi</span>
@@ -45,7 +45,7 @@
                                     <i class="bi bi-arrow-90deg-left"></i> </a>
                             </div>
 
-                            <div class="col-md-6 border-start">
+                            {{-- <div class="col-md-6 border-start">
                                 <h5>Time Tracker</h5>
                                 <div id="time-tracker">
                                     <span id="time-display">00:00:00</span>
@@ -58,7 +58,7 @@
                                                 class="bi bi-stop-fill"></i></button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12 mt-3">
                                 <div class="d-flex justify-content-between align-items-center border-top pt-2">
                                     <h5>Checklist</h5>
@@ -203,7 +203,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="priority" class="form-label">Priority</label>
                                 <select name="priority" id="priority" class="form-select" required>
                                     <option value="low" {{ $task->priority == 'low' ? 'selected' : '' }}>Low</option>
@@ -214,7 +214,7 @@
                                 @error('priority')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" id="status" class="form-select" required>

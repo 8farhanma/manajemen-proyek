@@ -22,7 +22,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'priority' => 'required|in:low,medium,high',
+            // 'priority' => 'required|in:low,medium,high',
         ]);
 
         $project->tasks()->create($request->all());
@@ -41,7 +41,7 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'priority' => 'required|in:low,medium,high',
+            // 'priority' => 'required|in:low,medium,high',
             'status' => 'required|in:perencanaan,pembuatan,pengeditan,peninjauan,publikasi',
         ]);
 
