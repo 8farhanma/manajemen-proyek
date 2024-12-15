@@ -29,17 +29,6 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            {{-- <div class="mb-3">
-                <label for="priority" class="form-label">Priority</label>
-                <select name="priority" id="priority" class="form-select" required>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
-                @error('priority')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div> --}}
             <button type="submit" class="btn btn-primary">Create Task</button>
         </form>
     </div>

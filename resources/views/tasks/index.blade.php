@@ -53,8 +53,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         {{ $task->title }}
-                                        <span style="font-size: 12px;"
-                                            class="badge {{ $task->priority == 'low' ? 'bg-success' : ($task->priority == 'medium' ? 'bg-warning' : 'bg-danger') }}">{{ ucfirst($task->priority) }}</span>
                                     </h5>
 
                                     <p class="card-text">{{ $task->description }}</p>
@@ -200,17 +198,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            {{-- <div class="mb-3">
-                                <label for="priority" class="form-label">Priority</label>
-                                <select name="priority" id="priority" class="form-select" required>
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
-                                </select>
-                                @error('priority')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> --}}
                             <div class="mb-3">
                                 <label for="user_id" class="form-label">Assign To</label>
                                 <select name="user_id" id="user_id" class="form-select">

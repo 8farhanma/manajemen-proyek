@@ -20,9 +20,6 @@
                                 <h5 class="card-title">{{ $task->title }}</h5>
                                 <p class="card-text">{{ $task->description }}</p>
                                 <p class="card-text"><strong>Due Date:</strong> {{ $task->due_date }}</p>
-                                {{-- <p class="card-text"><strong>Priority:</strong> <span
-                                        class="badge {{ $task->priority == 'low' ? 'bg-success' : ($task->priority == 'medium' ? 'bg-warning' : 'bg-danger') }}">{{ ucfirst($task->priority) }}</span>
-                                </p> --}}
                                 <p class="card-text"><strong>Status:</strong>
                                     @if ($task->status == 'publikasi')
                                         <span class="badge bg-success">Publikasi</span>
@@ -203,18 +200,6 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            {{-- <div class="mb-3">
-                                <label for="priority" class="form-label">Priority</label>
-                                <select name="priority" id="priority" class="form-select" required>
-                                    <option value="low" {{ $task->priority == 'low' ? 'selected' : '' }}>Low</option>
-                                    <option value="medium" {{ $task->priority == 'medium' ? 'selected' : '' }}>Medium
-                                    </option>
-                                    <option value="high" {{ $task->priority == 'high' ? 'selected' : '' }}>High</option>
-                                </select>
-                                @error('priority')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> --}}
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" id="status" class="form-select" required>

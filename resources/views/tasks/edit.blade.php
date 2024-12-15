@@ -28,17 +28,6 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="mb-3">
-                <label for="priority" class="form-label">Priority</label>
-                <select name="priority" id="priority" class="form-select" required>
-                    <option value="low" {{ $task->priority == 'low' ? 'selected' : '' }}>Low</option>
-                    <option value="medium" {{ $task->priority == 'medium' ? 'selected' : '' }}>Medium</option>
-                    <option value="high" {{ $task->priority == 'high' ? 'selected' : '' }}>High</option>
-                </select>
-                @error('priority')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
             <button type="submit" class="btn btn-primary">Update Task</button>
         </form>
     </div>
