@@ -9,6 +9,7 @@ use App\Http\Controllers\ProjectFileController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
     Route::put('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
     Route::post('tasks/{task}/update-status', [TaskController::class, 'updateStatus']);
-    
+
     Route::resource('routines', RoutineController::class)->except(['show']);
     Route::get('routines/showAll', [RoutineController::class, 'showAll'])->name('routines.showAll');
     Route::get('routines/daily', [RoutineController::class, 'showDaily'])->name('routines.showDaily');
@@ -53,15 +54,18 @@ Route::middleware(['auth'])->group(function () {
         $upcomingReminders = $user->reminders()->where('date', '>=', now())->orderBy('date')->take(5)->get();
 
         return view('dashboard', compact(
-            'tasksCount', 
-            'routinesCount', 
-            'notesCount', 
+            'tasksCount',
+            'routinesCount',
+            'notesCount',
             'remindersCount',
-            'filesCount', 
-            'recentTasks', 
-            'todayRoutines', 
-            'recentNotes', 
+            'filesCount',
+            'recentTasks',
+            'todayRoutines',
+            'recentNotes',
             'upcomingReminders'
         ));
     })->name('dashboard');
 });
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);

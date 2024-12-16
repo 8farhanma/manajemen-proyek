@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Task Manager</title>
+    <title>Register - Task Manager</title>
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-circle.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,6 @@
             background-color: #f8f9fa;
             font-family: 'Poppins', sans-serif;
         }
-
 
         .card-header {
             background-color: #495057;
@@ -44,18 +43,6 @@
             background-color: #343a40;
             border-color: #343a40;
         }
-
-        .form-control {
-            border-radius: 0.5rem;
-        }
-
-        .form-check-label {
-            font-weight: 500;
-        }
-
-        .text-danger {
-            font-size: 0.875rem;
-        }
     </style>
 </head>
 
@@ -64,21 +51,22 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header text-center p-4 fs-1">
+                    <div class="card-header text-center p-4">
                         <img src="{{ asset('assets/img/logo-horizontal.png') }}" class="img-fluid" alt="task manager">
                     </div>
                     <div class="card-body">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="mb-3">
+                                <label for="name" class="form-label">Nama</label>
+                                <input type="text" name="name" id="name" class="form-control" required autofocus>
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" id="email" class="form-control"
-                                    placeholder="admin@example.com" required autofocus>
+                                <input type="email" name="email" id="email" class="form-control" required>
                                 @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -90,15 +78,15 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" name="remember" id="remember" class="form-check-input">
-                                <label for="remember" class="form-check-label">Remember Me</label>
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                             </div>
-                            <div class="d-grid mb-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary">Register</button>
                             </div>
-                            <div class="text-center mt-3">
-                                <p>Belum punya akun? <a href="{{ route('register') }}">Register</a></p>
+                            <div class="text-center">
+                                <p>Sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
                             </div>
                         </form>
                     </div>
@@ -110,4 +98,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-</html>
+</html> 
