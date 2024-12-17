@@ -4,6 +4,7 @@ class Calendar {
         this.currentDate = new Date();
         this.displayDate = new Date();
         this.reminders = reminders;
+        console.log('Initialized calendar with reminders:', reminders); // Debug log
         this.init();
     }
 
@@ -26,6 +27,7 @@ class Calendar {
     }
 
     getRemindersForDate(date) {
+        console.log('Getting reminders for date:', date, 'Available reminders:', this.reminders[date]); // Debug log
         return this.reminders[date] || [];
     }
 
