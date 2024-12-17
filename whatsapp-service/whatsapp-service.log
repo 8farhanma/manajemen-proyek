@@ -12,3 +12,79 @@
 {"config":{"apiKey":"test-key-default","apiUrl":"http://localhost:3000","debugMode":false,"logging":{"enabled":true,"level":"info"},"timeout":{"connection":30000,"request":20000}},"level":"info","message":"Starting WhatsApp service...","timestamp":"2024-12-17T14:52:14.581Z"}
 {"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-17T14:52:14.588Z"}
 {"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T14:52:41.572Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-17T15:43:47.923Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T15:53:56.752Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T15:53:57.533Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T15:53:57.568Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T15:53:57.772Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T15:56:11.377Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T15:56:11.427Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T15:56:11.445Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T15:56:11.469Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:10:47.942Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:11:26.227Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T16:11:26.276Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T16:11:26.812Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:17:29.524Z"}
+{"level":"info","message":"Received send message request","messageLength":146,"phone":"6283816002326","timestamp":"2024-12-17T16:17:29.609Z"}
+{"level":"info","message":"Message sent successfully","messageLength":146,"recipient":"6283816002326","timestamp":"2024-12-17T16:17:30.182Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:24:01.083Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T16:24:01.159Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T16:24:01.778Z"}
+{"level":"info","message":"Received send message request","messageLength":151,"phone":"6283816002326","timestamp":"2024-12-17T16:24:01.789Z"}
+{"level":"info","message":"Message sent successfully","messageLength":151,"recipient":"6283816002326","timestamp":"2024-12-17T16:24:01.801Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:27:02.793Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:28:03.223Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:29:02.640Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:30:02.308Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:31:02.158Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:31:10.590Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:32:02.290Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:33:02.333Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:34:02.549Z"}
+{"level":"info","message":"Received send message request","messageLength":94,"phone":"6283816002326","timestamp":"2024-12-17T16:34:02.591Z"}
+{"level":"info","message":"Message sent successfully","messageLength":94,"recipient":"6283816002326","timestamp":"2024-12-17T16:34:03.120Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:35:02.938Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:36:03.069Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:37:02.655Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:38:02.626Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:39:02.364Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:40:02.343Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:41:02.373Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:42:02.459Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:43:02.271Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:44:02.201Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:45:02.206Z"}
+{"level":"info","message":"Received send message request","messageLength":112,"phone":"6283816002326","timestamp":"2024-12-17T16:45:02.238Z"}
+{"level":"info","message":"Message sent successfully","messageLength":112,"recipient":"6283816002326","timestamp":"2024-12-17T16:45:02.760Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:46:02.335Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:47:02.336Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:48:02.250Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:49:02.559Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:50:02.511Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:51:04.852Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:52:02.279Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:53:02.277Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:54:02.594Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:55:02.308Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:56:02.487Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:57:02.572Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:58:02.554Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T16:59:02.341Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:00:02.910Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:01:02.677Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:02:02.521Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:03:02.654Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:04:02.585Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:05:02.947Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:06:02.643Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:07:02.719Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:08:02.737Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:09:02.720Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:10:02.732Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:11:02.589Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:12:02.638Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:13:02.751Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:14:02.729Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:15:02.794Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:16:02.886Z"}

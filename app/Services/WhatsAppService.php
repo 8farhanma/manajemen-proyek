@@ -27,35 +27,51 @@ class WhatsAppService
             // Normalize phone number
             $normalizedNumber = $this->normalizePhoneNumber($recipient);
             
-            Log::info('Sending WhatsApp reminder', [
-                'recipient' => $normalizedNumber,
-                'message' => $message
+            Log::info('Attempting to send WhatsApp reminder', [
+                'recipient' => $recipient,
+                'normalizedNumber' => $normalizedNumber,
+                'messageLength' => strlen($message)
             ]);
 
             // Send request to WhatsApp service
             $response = Http::timeout(10)
-                ->post("{$this->whatsappServiceUrl}/send-reminder", [
+                ->post("{$this->whatsappServiceUrl}/send-message", [
                     'phone' => $normalizedNumber,
                     'message' => $message
                 ]);
 
+            // Log the full response for debugging
+            Log::info('WhatsApp service response', [
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+
+            // Check for successful response
             if ($response->successful()) {
-                Log::info('WhatsApp reminder sent successfully', [
-                    'recipient' => $normalizedNumber
-                ]);
-                return true;
+                $responseData = $response->json();
+                
+                if ($responseData['success'] ?? false) {
+                    Log::info('WhatsApp reminder sent successfully', [
+                        'recipient' => $normalizedNumber
+                    ]);
+                    return true;
+                }
             }
 
+            // Log error details if sending failed
             Log::error('Failed to send WhatsApp reminder', [
                 'recipient' => $normalizedNumber,
-                'error' => $response->body()
+                'status' => $response->status(),
+                'body' => $response->body()
             ]);
+
             return false;
 
         } catch (\Exception $e) {
             Log::error('WhatsApp service error', [
                 'recipient' => $recipient,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ]);
             return false;
         }
@@ -67,7 +83,7 @@ class WhatsAppService
      * @param string $number
      * @return string
      */
-    protected function normalizePhoneNumber($number)
+    public function normalizePhoneNumber($number)
     {
         // Remove any non-digit characters
         $number = preg_replace('/\D/', '', $number);
@@ -82,5 +98,46 @@ class WhatsAppService
         }
         
         return $number;
+    }
+
+    /**
+     * Check WhatsApp service status
+     *
+     * @return array
+     */
+    public function checkStatus()
+    {
+        try {
+            $response = Http::timeout(5)
+                ->get("{$this->whatsappServiceUrl}/status");
+
+            if ($response->successful()) {
+                return [
+                    'success' => true,
+                    'status' => $response->json()
+                ];
+            }
+
+            Log::error('Failed to check WhatsApp status', [
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+
+            return [
+                'success' => false,
+                'status' => null
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Exception checking WhatsApp status', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return [
+                'success' => false,
+                'status' => null
+            ];
+        }
     }
 }

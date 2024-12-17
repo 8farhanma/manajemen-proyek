@@ -12,7 +12,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('reminders:send')->everyMinute();
+        // Improved reminder sending configuration
+        $schedule->command('reminders:send')
+            ->everyMinute()
+            ->withoutOverlapping(10)  // 10 minute timeout
+            ->runInBackground()
+            ->appendOutputTo(storage_path('logs/reminders.log'))
+            ->emailOutputTo('admin@yourproject.com'); // Optional: send email if there are issues
     }
 
     /**

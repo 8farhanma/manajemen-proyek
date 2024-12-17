@@ -73,6 +73,13 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'daily-detailed' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/laravel-daily.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),

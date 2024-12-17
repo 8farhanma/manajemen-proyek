@@ -53,48 +53,59 @@ app.get('/health', (req, res) => {
 });
 
 // Endpoint untuk mengirim pesan
-app.post('/send', async (req, res) => {
-    const { recipient, message, type = 'text' } = req.body;
-
-    logger.info('Received send request', { recipient, messageLength: message.length, type });
-
-    if (!recipient || !message) {
-        logger.warn('Missing required fields', { recipient, messageLength: message?.length });
-        return res.status(400).json({ 
-            error: 'Recipient and message are required',
-            success: false 
-        });
-    }
-
+app.post('/send-message', async (req, res) => {
     try {
-        // Normalisasi nomor telepon
-        const normalizedNumber = normalizePhoneNumber(recipient);
-        
-        const success = await whatsappService.sendMessage(normalizedNumber, message);
-        if (success) {
-            logger.info('Message sent successfully', { recipient: normalizedNumber });
-            res.json({ 
-                status: 'success', 
-                message: 'Message sent successfully',
-                success: true 
+        const { phone, message } = req.body;
+
+        // Validasi input
+        if (!phone || !message) {
+            logger.error('Invalid send message request', { 
+                phone: phone ? 'provided' : 'missing', 
+                message: message ? 'provided' : 'missing' 
+            });
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Phone number and message are required' 
+            });
+        }
+
+        // Log incoming message request
+        logger.info('Received send message request', { 
+            phone, 
+            messageLength: message.length 
+        });
+
+        // Kirim pesan
+        const sendResult = await whatsappService.sendMessage(phone, message);
+
+        if (sendResult) {
+            logger.info('Message sent successfully', { 
+                recipient: phone, 
+                messageLength: message.length 
+            });
+            return res.status(200).json({ 
+                success: true, 
+                message: 'Message sent successfully' 
             });
         } else {
-            logger.error('Failed to send message', { recipient: normalizedNumber });
-            res.status(500).json({ 
-                status: 'error', 
-                message: 'Failed to send message',
-                success: false 
+            logger.error('Failed to send message', { 
+                recipient: phone, 
+                messageLength: message.length 
+            });
+            return res.status(500).json({ 
+                success: false, 
+                error: 'Failed to send message' 
             });
         }
     } catch (error) {
-        logger.error('Exception in sending message', { 
-            error: error.message,
-            stack: error.stack 
+        // Tangani kesalahan yang tidak terduga
+        logger.error('Unexpected error in send message endpoint', {
+            errorMessage: error.message,
+            errorStack: error.stack
         });
         res.status(500).json({ 
-            status: 'error', 
-            message: error.message,
-            success: false 
+            success: false, 
+            error: 'Internal server error' 
         });
     }
 });
