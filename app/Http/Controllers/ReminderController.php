@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reminder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class ReminderController extends Controller
@@ -72,20 +73,28 @@ class ReminderController extends Controller
         ]);
 
         try {
-            Reminder::create([
+            // Tambahkan debug logging
+            Log::info('Creating reminder with data:', $validated);
+
+            $reminder = Reminder::create([
                 'title' => $validated['title'],
                 'description' => $validated['description'],
                 'date' => Carbon::parse($validated['date'])->format('Y-m-d'),
-                'time' => $validated['time'] . ':00',
+                'time' => $validated['time'] . ':00', // Pastikan format waktu lengkap
                 'user_id' => Auth::id(),
             ]);
+
+            // Tambahkan debug logging
+            Log::info('Reminder created:', $reminder->toArray());
 
             return redirect()->route('reminders.index')
                 ->with('success', 'Reminder created successfully. All users will receive a WhatsApp notification at the specified time.');
         } catch (\Exception $e) {
-            report($e);
+            // Tambahkan error logging
+            Log::error('Failed to create reminder: ' . $e->getMessage());
+            
             return back()->withInput()
-                ->withErrors(['error' => 'Failed to create reminder. Please try again.']);
+                ->withErrors(['error' => 'Failed to create reminder. Please try again. Error: ' . $e->getMessage()]);
         }
     }
 

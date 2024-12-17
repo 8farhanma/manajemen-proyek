@@ -1,0 +1,14 @@
+{"config":{"apiKey":"test-key-default","apiUrl":"http://localhost:3000","debugMode":false,"logging":{"enabled":true,"level":"info"},"timeout":{"connection":30000,"request":20000}},"level":"info","message":"Starting WhatsApp service...","timestamp":"2024-12-17T14:27:52.564Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-17T14:27:52.572Z"}
+{"config":{"apiKey":"test-key-default","apiUrl":"http://localhost:3000","debugMode":false,"logging":{"enabled":true,"level":"info"},"timeout":{"connection":30000,"request":20000}},"level":"info","message":"Starting WhatsApp service...","timestamp":"2024-12-17T14:34:20.072Z"}
+{"level":"info","message":"WhatsApp service listening on port 3030","timestamp":"2024-12-17T14:34:20.081Z"}
+{"level":"info","message":"Received send request","messageLength":171,"recipient":"6281234567890","timestamp":"2024-12-17T14:34:38.087Z","type":"text"}
+{"level":"error","message":"Failed to send message","recipient":"6281234567890","timestamp":"2024-12-17T14:34:38.394Z"}
+{"level":"info","message":"Received send request","messageLength":174,"recipient":"6282345678901","timestamp":"2024-12-17T14:34:38.420Z","type":"text"}
+{"level":"error","message":"Failed to send message","recipient":"6282345678901","timestamp":"2024-12-17T14:34:38.424Z"}
+{"config":{"apiKey":"test-key-default","apiUrl":"http://localhost:3000","debugMode":false,"logging":{"enabled":true,"level":"info"},"timeout":{"connection":30000,"request":20000}},"level":"info","message":"Starting WhatsApp service...","timestamp":"2024-12-17T14:50:01.355Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-17T14:50:01.362Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T14:50:56.318Z"}
+{"config":{"apiKey":"test-key-default","apiUrl":"http://localhost:3000","debugMode":false,"logging":{"enabled":true,"level":"info"},"timeout":{"connection":30000,"request":20000}},"level":"info","message":"Starting WhatsApp service...","timestamp":"2024-12-17T14:52:14.581Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-17T14:52:14.588Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T14:52:41.572Z"}
