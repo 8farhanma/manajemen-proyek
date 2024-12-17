@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(!Auth::user()->isAdmin())
+        <script>window.location = "{{ route('reminders.index') }}";</script>
+    @endif
+    
     <div class="container">
         <h2 class="mb-4 shadow-sm p-3 rounded bg-white">Add Reminder</h2>
         <div class="card border-0 shadow-sm m-auto" style="max-width: 600px;">
@@ -23,7 +27,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">Date</label>
-                        <input type="date" name="date" id="date" class="form-control">
+                        <input type="date" name="date" id="date" class="form-control" value="{{ $selectedDate }}">
                         @error('date')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -36,6 +40,7 @@
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Add Reminder</button>
+                    <a href="{{ route('reminders.index') }}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

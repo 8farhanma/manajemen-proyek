@@ -100,12 +100,12 @@ class Calendar {
                     <div class="reminder-list">
                         ${reminderHtml}
                     </div>
-                </div>`;
+                </div>
+            `;
         }
 
         // Next month's days
-        for (let j = 1; j <= nextDays; j++) {
-            if (j === 7) break; // Prevent extra row
+        for (let j = 1; j <= nextDays && nextDays < 7; j++) {
             const nextMonth = month + 1 > 11 ? 0 : month + 1;
             const nextYear = month + 1 > 11 ? year + 1 : year;
             const date = this.formatDate(nextYear, nextMonth, j);
@@ -117,72 +117,29 @@ class Calendar {
         this.attachEventListeners();
     }
 
-    goToPreviousMonth() {
-        const currentYear = this.displayDate.getFullYear();
-        const currentMonth = this.displayDate.getMonth();
-        
-        if (currentMonth === 0) {
-            this.displayDate.setFullYear(currentYear - 1);
-            this.displayDate.setMonth(11);
-        } else {
-            this.displayDate.setMonth(currentMonth - 1);
-        }
-        
-        this.render();
-    }
-
-    goToNextMonth() {
-        const currentYear = this.displayDate.getFullYear();
-        const currentMonth = this.displayDate.getMonth();
-        
-        if (currentMonth === 11) {
-            this.displayDate.setFullYear(currentYear + 1);
-            this.displayDate.setMonth(0);
-        } else {
-            this.displayDate.setMonth(currentMonth + 1);
-        }
-        
-        this.render();
-    }
-
     attachEventListeners() {
-        const prevButton = this.container.querySelector('.prev-month');
-        const nextButton = this.container.querySelector('.next-month');
+        // Previous month button
+        this.container.querySelector('.prev-month').addEventListener('click', () => {
+            this.displayDate.setMonth(this.displayDate.getMonth() - 1);
+            this.render();
+        });
 
-        if (prevButton) {
-            prevButton.addEventListener('click', () => this.goToPreviousMonth());
-        }
+        // Next month button
+        this.container.querySelector('.next-month').addEventListener('click', () => {
+            this.displayDate.setMonth(this.displayDate.getMonth() + 1);
+            this.render();
+        });
 
-        if (nextButton) {
-            nextButton.addEventListener('click', () => this.goToNextMonth());
-        }
-
-        // Add click event listeners to all calendar days
-        const calendarDays = this.container.querySelectorAll('.calendar-day');
-        calendarDays.forEach(day => {
-            if (!day.classList.contains('inactive')) {
+        // Day click event (for admins)
+        const isAdmin = document.body.classList.contains('is-admin');
+        if (isAdmin) {
+            this.container.querySelectorAll('.calendar-day').forEach(day => {
                 day.addEventListener('click', (e) => {
-                    if (!e.target.classList.contains('calendar-reminder')) {
+                    if (!e.target.closest('.calendar-reminder')) {
                         const date = day.dataset.date;
                         window.location.href = `/reminders/create?date=${date}`;
                     }
                 });
-            }
-        });
-
-        const reminderModal = document.getElementById('reminderModal');
-        if (reminderModal) {
-            reminderModal.addEventListener('show.bs.modal', (e) => {
-                const reminder = JSON.parse(e.relatedTarget.dataset.reminder);
-                const title = reminderModal.querySelector('.modal-title');
-                const description = reminderModal.querySelector('.modal-description');
-                const date = reminderModal.querySelector('.modal-date');
-                const time = reminderModal.querySelector('.modal-time');
-                
-                title.textContent = reminder.title;
-                description.textContent = reminder.description;
-                date.textContent = reminder.date;
-                time.textContent = reminder.time;
             });
         }
     }

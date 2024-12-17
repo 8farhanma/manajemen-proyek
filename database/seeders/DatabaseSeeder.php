@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Rina Noviana',
             'email' => 'admin@example.com',
             'password' => bcrypt('secret'),
+            'phone_number' => '6283816002326',
         ]);
     }
 }

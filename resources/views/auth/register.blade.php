@@ -72,6 +72,17 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
+                                <label for="phone_number" class="form-label">Nomor WhatsApp</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">+62</span>
+                                    <input type="tel" name="phone_number" id="phone_number" class="form-control" placeholder="8xxxxxxxxxx" pattern="[0-9]{10,13}" required>
+                                </div>
+                                <small class="form-text text-muted">Contoh: 81234567890 (tanpa angka 0 di depan)</small>
+                                @error('phone_number')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" name="password" id="password" class="form-control" required>
                                 @error('password')

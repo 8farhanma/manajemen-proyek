@@ -17,6 +17,9 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
 Route::middleware(['auth'])->group(function () {
     Route::controller(MailController::class)->prefix('mail')->name('mail.')->group(function () {
         Route::get('/', 'index')->name('inbox');
@@ -37,7 +40,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('routines/monthly', [RoutineController::class, 'showMonthly'])->name('routines.showMonthly');
     Route::resource('files', FileController::class);
     Route::resource('notes', NoteController::class);
-    Route::resource('reminders', ReminderController::class);
+    Route::prefix('reminders')->name('reminders.')->middleware('auth')->group(function () {
+        Route::get('/', [ReminderController::class, 'index'])->name('index');
+        Route::get('/create', [ReminderController::class, 'create'])->name('create')->middleware('admin');
+        Route::post('/', [ReminderController::class, 'store'])->name('store')->middleware('admin');
+        Route::get('/{reminder}/edit', [ReminderController::class, 'edit'])->name('edit')->middleware('admin');
+        Route::put('/{reminder}', [ReminderController::class, 'update'])->name('update')->middleware('admin');
+        Route::delete('/{reminder}', [ReminderController::class, 'destroy'])->name('destroy')->middleware('admin');
+        Route::get('/{reminder}', [ReminderController::class, 'show'])->name('show');
+    });
     Route::resource('checklist-items', ChecklistItemController::class);
     Route::get('checklist-items/{checklistItem}/update-status', [ChecklistItemController::class, 'updateStatus'])->name('checklist-items.update-status');
     Route::get('/', function () {
@@ -66,6 +77,3 @@ Route::middleware(['auth'])->group(function () {
         ));
     })->name('dashboard');
 });
-
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);

@@ -12,33 +12,42 @@ class ReminderController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->authorizeResource(Reminder::class, 'reminder');
+        // Add admin middleware only to admin actions
+        $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
     {
         try {
-            $reminders = Auth::user()->reminders;
+            // For members, show all reminders
+            $reminders = Reminder::all();
             
-            // Format the reminders by date
-            $remindersByDate = $reminders->groupBy(function($reminder) {
-                return $reminder->date;
-            })->map(function($dateReminders) {
-                return $dateReminders->map(function($reminder) {
-                    return [
-                        'id' => $reminder->id,
-                        'title' => $reminder->title,
-                        'description' => $reminder->description,
-                        'date' => $reminder->date,
-                        'time' => substr($reminder->time, 0, 5), // Format as HH:mm
-                    ];
-                });
-            });
+            // Debug: Explicitly format dates
+            $remindersByDate = [];
+            foreach ($reminders as $reminder) {
+                $formattedDate = $reminder->date instanceof \Carbon\Carbon 
+                    ? $reminder->date->format('Y-m-d') 
+                    : (is_string($reminder->date) 
+                        ? $reminder->date 
+                        : date('Y-m-d', strtotime($reminder->date)));
+                
+                if (!isset($remindersByDate[$formattedDate])) {
+                    $remindersByDate[$formattedDate] = [];
+                }
+                
+                $remindersByDate[$formattedDate][] = [
+                    'id' => $reminder->id,
+                    'title' => $reminder->title,
+                    'description' => $reminder->description,
+                    'date' => $formattedDate,
+                    'time' => substr($reminder->time, 0, 5), // Format as HH:mm
+                ];
+            }
 
             return view('reminders.index', compact('remindersByDate'));
         } catch (\Exception $e) {
             report($e);
-            return back()->withErrors(['error' => 'Failed to load reminders. Please try again.']);
+            return back()->withErrors(['error' => 'Failed to load reminders: ' . $e->getMessage()]);
         }
     }
 
@@ -63,15 +72,16 @@ class ReminderController extends Controller
         ]);
 
         try {
-            Auth::user()->reminders()->create([
+            Reminder::create([
                 'title' => $validated['title'],
                 'description' => $validated['description'],
                 'date' => Carbon::parse($validated['date'])->format('Y-m-d'),
                 'time' => $validated['time'] . ':00',
+                'user_id' => Auth::id(),
             ]);
 
             return redirect()->route('reminders.index')
-                ->with('success', 'Reminder created successfully. You will receive a WhatsApp notification at the specified time.');
+                ->with('success', 'Reminder created successfully. All users will receive a WhatsApp notification at the specified time.');
         } catch (\Exception $e) {
             report($e);
             return back()->withInput()
