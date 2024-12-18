@@ -88,3 +88,33 @@
 {"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:14:02.729Z"}
 {"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:15:02.794Z"}
 {"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:16:02.886Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:17:03.823Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:18:03.063Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-17T17:19:02.959Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-18T02:09:32.087Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-18T02:24:40.422Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-18T02:27:33.806Z"}
+{"level":"info","message":"Received send message request","messageLength":106,"phone":"6283816002326","timestamp":"2024-12-18T02:33:26.347Z"}
+{"level":"info","message":"Message sent successfully","messageLength":106,"recipient":"6283816002326","timestamp":"2024-12-18T02:33:26.571Z"}
+{"level":"info","message":"Received send message request","messageLength":96,"phone":"6283816002326","timestamp":"2024-12-18T02:40:47.573Z"}
+{"level":"info","message":"Message sent successfully","messageLength":96,"recipient":"6283816002326","timestamp":"2024-12-18T02:40:47.797Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-18T02:52:01.631Z"}
+{"level":"info","message":"Received send message request","messageLength":96,"phone":"6283816002326","timestamp":"2024-12-18T02:52:01.744Z"}
+{"level":"info","message":"Message sent successfully","messageLength":96,"recipient":"6283816002326","timestamp":"2024-12-18T02:52:01.964Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-18T02:52:02.990Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-18T02:52:25.622Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-18T02:53:01.680Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-18T02:54:01.544Z"}
+{"level":"info","message":"Status check","status":{"connected":true,"qrGenerated":false,"status":"connected"},"timestamp":"2024-12-18T03:11:33.879Z"}
+{"level":"info","message":"Received send message request","messageLength":143,"phone":"6283816002326","timestamp":"2024-12-18T03:22:41.218Z"}
+{"level":"info","message":"Message sent successfully","messageLength":143,"recipient":"6283816002326","timestamp":"2024-12-18T03:22:41.716Z"}
+{"level":"info","message":"Received send message request","messageLength":143,"phone":"6283816002326","timestamp":"2024-12-18T03:26:08.284Z"}
+{"level":"info","message":"Message sent successfully","messageLength":143,"recipient":"6283816002326","timestamp":"2024-12-18T03:26:08.298Z"}
+{"level":"info","message":"Received send message request","messageLength":149,"phone":"6283816002326","timestamp":"2024-12-18T03:31:56.398Z"}
+{"level":"info","message":"Message sent successfully","messageLength":149,"recipient":"6283816002326","timestamp":"2024-12-18T03:31:56.904Z"}
+{"level":"info","message":"Received send message request","messageLength":162,"phone":"6283816002326","timestamp":"2024-12-18T03:35:56.077Z"}
+{"level":"info","message":"Message sent successfully","messageLength":162,"recipient":"6283816002326","timestamp":"2024-12-18T03:35:56.111Z"}
+{"level":"info","message":"Received send message request","messageLength":144,"phone":"6283816002326","timestamp":"2024-12-18T04:06:01.963Z"}
+{"level":"info","message":"Message sent successfully","messageLength":144,"recipient":"6283816002326","timestamp":"2024-12-18T04:06:02.462Z"}
+{"level":"info","message":"Received send message request","messageLength":152,"phone":"6283816002326","timestamp":"2024-12-18T04:06:02.479Z"}
+{"level":"info","message":"Message sent successfully","messageLength":152,"recipient":"6283816002326","timestamp":"2024-12-18T04:06:02.484Z"}

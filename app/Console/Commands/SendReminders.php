@@ -52,8 +52,8 @@ class SendReminders extends Command
 
             // Find due reminders with detailed logging
             $query = Reminder::where('notification_sent', false)
-                ->where('date', '<=', $now->format('Y-m-d'))
-                ->where('time', '<=', $now->format('H:i:s'))
+                ->whereDate('date', '<=', $now->format('Y-m-d'))
+                ->whereTime('time', '<=', $now->format('H:i:s'))
                 ->with('user');
 
             // Log the SQL query for debugging
