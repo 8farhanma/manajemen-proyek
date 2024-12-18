@@ -87,6 +87,99 @@ Task Manager allows users to efficiently manage projects and tasks through a use
    - Upload and attach files to tasks or projects.
    - Easily access all necessary documents and resources in one place.
 
+## WhatsApp Reminders Integration
+
+### Prerequisites
+- PHP 8.1 or higher
+- Windows OS (for Task Scheduler)
+- WhatsApp Web active and logged in
+- XAMPP or similar web server
+
+### Setup WhatsApp Integration
+
+1. **Install WhatsApp Service**
+   ```bash
+   cd whatsapp-service
+   npm install
+   ```
+
+2. **Configure WhatsApp Service**
+   - Start the WhatsApp service:
+     ```bash
+     node server.js
+     ```
+   - Scan QR code with WhatsApp mobile app when prompted
+   - Keep the service running for WhatsApp functionality
+
+3. **Configure Laravel Environment**
+   Update your `.env` file with WhatsApp service settings:
+   ```
+   WHATSAPP_SERVICE_URL=http://localhost:3000
+   ```
+
+### Automated Reminder Setup
+
+1. **Create Batch File**
+   Create `run_scheduler.bat` in project root with following content:
+   ```batch
+   @echo off
+   cd /d "C:\xampp-pa\htdocs\manajemen-proyek"
+   "C:\xampp-pa\php\php.exe" artisan reminders:send --force
+   if %ERRORLEVEL% EQU 0 (
+       echo Command completed successfully
+   ) else (
+       echo Command failed with error code %ERRORLEVEL%
+   )
+   exit /b 0
+   ```
+
+2. **Configure Windows Task Scheduler**
+   - Open Task Scheduler (taskschd.msc)
+   - Create new task with these settings:
+     - **General tab:**
+       - Name: `SendReminders`
+       - Run with highest privileges: Yes
+       - Use SYSTEM account
+     - **Triggers tab:**
+       - New Trigger: Run every 1 minute
+     - **Actions tab:**
+       - Program: Path to run_scheduler.bat
+       - Start in: Project root directory
+     - **Settings tab:**
+       - Stop task if runs longer than: 30 seconds
+       - If task is already running: Stop the existing instance
+
+3. **Verify Setup**
+   - Create a test reminder in the application
+   - Wait for the scheduled time
+   - Check WhatsApp for the reminder message
+   - Verify reminder status in application dashboard
+
+### Troubleshooting
+
+1. **WhatsApp Service Issues**
+   - Ensure WhatsApp Web is logged in
+   - Check if WhatsApp service is running (port 3000)
+   - Verify QR code has been scanned
+
+2. **Task Scheduler Issues**
+   - Check Task Scheduler History for errors
+   - Verify batch file path is correct
+   - Ensure PHP path in batch file is correct
+
+3. **Reminder Not Sending**
+   - Check application logs in `storage/logs`
+   - Verify reminder date and time are correct
+   - Ensure WhatsApp recipient number is valid
+
+### Important Notes
+
+- Keep the WhatsApp service running continuously
+- Server must remain active for reminders to work
+- Regular monitoring of Task Scheduler recommended
+- Backup WhatsApp session to prevent re-authentication
+- Test system after server restarts
+
 ## Demo
 <img src="https://github.com/arafat-web/Task-Manager/assets/26932301/d5f6a26e-32d1-44dc-aee5-9548a44506ae" alt="Demo">
 <img src="https://github.com/arafat-web/Task-Manager/assets/26932301/8795129a-69e5-4911-bb26-caae3bca50be" alt="Demo">
