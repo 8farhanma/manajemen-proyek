@@ -151,6 +151,22 @@
                     <i class="bi bi-bell"></i> Reminders
                 </a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {{ request()->is('content*') ? 'active' : '' }}" href="#" 
+                    id="contentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-collection"></i> Content
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="contentDropdown">
+                    <li><a class="dropdown-item" href="{{ route('content.index') }}">Content Management</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ route('content.normalization-divisors') }}">Pembagi Normalisasi</a></li>
+                    <li><a class="dropdown-item" href="{{ route('content.normalized-matrix') }}">Tabel Ternormalisasi</a></li>
+                    <li><a class="dropdown-item" href="{{ route('content.weighted-normalized-matrix') }}">Tabel Ternormalisasi Terbobot</a></li>
+                    <li><a class="dropdown-item" href="{{ route('content.ideal-solutions') }}">Solusi Ideal Positif dan Negatif</a></li>
+                    <li><a class="dropdown-item" href="{{ route('content.separation-measures') }}">Jarak Ideal Positif dan Negatif</a></li>
+                    <li><a class="dropdown-item" href="{{ route('content.relative-closeness') }}">Kedekatan Relatif</a></li>
+                </ul>
+            </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('files*') ? 'active' : '' }}" href="{{ route('files.index') }}">
                     <i class="bi bi-file"></i> Files

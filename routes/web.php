@@ -10,6 +10,7 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ContentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,22 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::resource('checklist-items', ChecklistItemController::class);
     Route::get('checklist-items/{checklistItem}/update-status', [ChecklistItemController::class, 'updateStatus'])->name('checklist-items.update-status');
+
+    // Content routes
+    Route::get('/content', [ContentController::class, 'index'])->name('content.index');
+    Route::post('/content', [ContentController::class, 'store'])->name('content.store');
+    Route::post('/content/{id}/like', [ContentController::class, 'like'])->name('content.like');
+    Route::post('/content/{id}/comment', [ContentController::class, 'comment'])->name('content.comment');
+    Route::post('/content/{id}/view', [ContentController::class, 'view'])->name('content.view');
+    Route::get('/content/normalization-divisors', [ContentController::class, 'showNormalizationDivisors'])
+        ->name('content.normalization-divisors');
+    Route::get('/content/normalized-matrix', [ContentController::class, 'showNormalizedMatrix'])
+        ->name('content.normalized-matrix');
+    Route::get('/content/weighted-normalized-matrix', [ContentController::class, 'weightedNormalizedMatrix'])->name('content.weighted-normalized-matrix');
+    Route::get('/content/ideal-solutions', [ContentController::class, 'showIdealSolutions'])->name('content.ideal-solutions');
+    Route::get('/content/separation-measures', [ContentController::class, 'showSeparationMeasures'])->name('content.separation-measures');
+    Route::get('/content/relative-closeness', [ContentController::class, 'showRelativeCloseness'])->name('content.relative-closeness');
+
     Route::get('/', function () {
         $user = Auth::user();
         $tasksCount = $user->tasks()->count();

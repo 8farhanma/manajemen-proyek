@@ -122,3 +122,7 @@
 {"level":"info","message":"Message sent successfully","messageLength":133,"recipient":"6283816002326","timestamp":"2024-12-18T04:17:08.943Z"}
 {"level":"info","message":"Received send message request","messageLength":145,"phone":"6283816002326","timestamp":"2024-12-18T04:21:08.504Z"}
 {"level":"info","message":"Message sent successfully","messageLength":145,"recipient":"6283816002326","timestamp":"2024-12-18T04:21:08.511Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-25T06:12:24.875Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-25T14:26:03.377Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-25T15:36:35.895Z"}
+{"level":"info","message":"WhatsApp service listening on port 3000","timestamp":"2024-12-25T15:48:00.144Z"}
