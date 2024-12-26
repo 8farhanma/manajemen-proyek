@@ -183,11 +183,11 @@
                     <i class="bi bi-file"></i> Files
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link {{ request()->is('analytics') ? 'active' : '' }}" href="{{ route('analytics.dashboard') }}">
                     <i class="bi bi-bar-chart"></i> Analytics
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <div class="content d-flex flex-column">

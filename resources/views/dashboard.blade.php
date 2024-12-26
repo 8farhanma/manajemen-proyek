@@ -5,9 +5,22 @@
 @section('content')
     <div class="container">
         <h2>Welcome to your Dashboard</h2>
-        <p>This is your dashboard where you can manage your tasks, routines, notes, and files.</p>
+        <!-- <p>This is your dashboard where you can manage your tasks, routines, notes, and files.</p> -->
 
         <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h5 class="card-title m-0">TOPSIS Score Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="topsisChart" style="height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row mb-4">
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
@@ -114,5 +127,61 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('topsisChart').getContext('2d');
+    const chartData = @json($chartData);
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartData.map(item => item.name),
+            datasets: [{
+                label: 'TOPSIS Score',
+                data: chartData.map(item => item.score),
+                backgroundColor: chartData.map((_, index) => {
+                    const value = index / chartData.length;
+                    return `rgba(54, 162, 235, ${1 - value * 0.6})`; // Gradient blue
+                }),
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Alternative Rankings by TOPSIS Score'
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'TOPSIS Score'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Alternatives'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+@endpush

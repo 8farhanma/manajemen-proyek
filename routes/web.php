@@ -2,6 +2,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ChecklistItemController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\NoteController;
@@ -71,29 +72,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.dashboard');
 
-    Route::get('/', function () {
-        $user = Auth::user();
-        $tasksCount = $user->tasks()->count();
-        $routinesCount = $user->routines()->count();
-        $notesCount = $user->notes()->count();
-        $remindersCount = $user->reminders()->count();
-        $filesCount = $user->files()->count();
-        $recentTasks = $user->tasks()->latest()->take(5)->get();
-        $todayRoutines = $user->routines()->whereDate('start_time', now())->get();
-        $recentNotes = $user->notes()->latest()->take(5)->get();
-
-        $upcomingReminders = $user->reminders()->where('date', '>=', now())->orderBy('date')->take(5)->get();
-
-        return view('dashboard', compact(
-            'tasksCount',
-            'routinesCount',
-            'notesCount',
-            'remindersCount',
-            'filesCount',
-            'recentTasks',
-            'todayRoutines',
-            'recentNotes',
-            'upcomingReminders'
-        ));
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });
