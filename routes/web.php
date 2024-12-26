@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ChecklistItemController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\MailController;
@@ -67,6 +68,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/content/ideal-solutions', [ContentController::class, 'showIdealSolutions'])->name('content.ideal-solutions');
     Route::get('/content/separation-measures', [ContentController::class, 'showSeparationMeasures'])->name('content.separation-measures');
     Route::get('/content/relative-closeness', [ContentController::class, 'showRelativeCloseness'])->name('content.relative-closeness');
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.dashboard');
 
     Route::get('/', function () {
         $user = Auth::user();

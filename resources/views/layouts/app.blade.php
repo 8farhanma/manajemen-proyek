@@ -153,6 +153,10 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
+                @php
+                    $hasContent = \App\Models\Content::count() > 0;
+                    $disabledClass = !$hasContent ? 'disabled text-muted' : '';
+                @endphp
                 <a class="nav-link dropdown-toggle {{ request()->is('content*') ? 'active' : '' }}" href="#" 
                     id="contentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-collection"></i> Content
@@ -160,17 +164,28 @@
                 <ul class="dropdown-menu" aria-labelledby="contentDropdown">
                     <li><a class="dropdown-item" href="{{ route('content.index') }}">Content Management</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{ route('content.normalization-divisors') }}">Pembagi Normalisasi</a></li>
-                    <li><a class="dropdown-item" href="{{ route('content.normalized-matrix') }}">Tabel Ternormalisasi</a></li>
-                    <li><a class="dropdown-item" href="{{ route('content.weighted-normalized-matrix') }}">Tabel Ternormalisasi Terbobot</a></li>
-                    <li><a class="dropdown-item" href="{{ route('content.ideal-solutions') }}">Solusi Ideal Positif dan Negatif</a></li>
-                    <li><a class="dropdown-item" href="{{ route('content.separation-measures') }}">Jarak Ideal Positif dan Negatif</a></li>
-                    <li><a class="dropdown-item" href="{{ route('content.relative-closeness') }}">Kedekatan Relatif</a></li>
+                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.normalization-divisors') : '#' }}" 
+                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Pembagi Normalisasi</a></li>
+                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.normalized-matrix') : '#' }}"
+                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Tabel Ternormalisasi</a></li>
+                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.weighted-normalized-matrix') : '#' }}"
+                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Tabel Ternormalisasi Terbobot</a></li>
+                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.ideal-solutions') : '#' }}"
+                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Solusi Ideal Positif dan Negatif</a></li>
+                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.separation-measures') : '#' }}"
+                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Jarak Ideal Positif dan Negatif</a></li>
+                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.relative-closeness') : '#' }}"
+                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Kedekatan Relatif</a></li>
                 </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('files*') ? 'active' : '' }}" href="{{ route('files.index') }}">
                     <i class="bi bi-file"></i> Files
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('analytics') ? 'active' : '' }}" href="{{ route('analytics.dashboard') }}">
+                    <i class="bi bi-bar-chart"></i> Analytics
                 </a>
             </li>
         </ul>
