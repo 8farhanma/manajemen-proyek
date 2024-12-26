@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table id="alternativeTable" class="table table-bordered table-hover">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center" style="width: 5%">No</th>
@@ -151,6 +151,25 @@
 
 @push('scripts')
 <script>
+$(document).ready(function() {
+    $('#alternativeTable').DataTable({
+        pageLength: 10,
+        ordering: true,
+        searching: true,
+        language: {
+            search: "Search:",
+            lengthMenu: "Show _MENU_ entries per page",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries",
+            paginate: {
+                first: "First",
+                last: "Last",
+                next: "Next",
+                previous: "Previous"
+            }
+        }
+    });
+});
+
 function likeContent(id) {
     fetch(`/content/${id}/like`, {
         method: 'POST',

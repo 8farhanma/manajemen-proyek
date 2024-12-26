@@ -10,7 +10,7 @@ class ContentController extends Controller
 {
     public function index()
     {
-        $popularContent = Content::getPopularContent(10);
+        $popularContent = Content::getPopularContent(5);
         $allContent = Content::orderBy('created_at', 'desc')->paginate(15);
 
         return view('content.index', compact('popularContent', 'allContent'));
