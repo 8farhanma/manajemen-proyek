@@ -22,22 +22,24 @@
                                 <p class="card-text"><strong>Due Date:</strong> {{ $task->due_date }}</p>
                                 <p class="card-text"><strong>Status:</strong>
                                     @if ($task->status == 'publikasi')
-                                        <span class="badge bg-success">Publikasi</span>
+                                        <span class="badge bg-danger">Publikasi</span>
                                     @elseif($task->status == 'perencanaan')
-                                        <span class="badge bg-primary">Perencanaan</span>
+                                        <span class="badge bg-success">Perencanaan</span>
                                     @elseif($task->status == 'pembuatan')
-                                        <span class="badge bg-warning">Pembuatan</span>
+                                        <span class="badge bg-primary">Pembuatan</span>
                                     @elseif($task->status == 'pengeditan')
-                                        <span class="badge bg-warning">Pengeditan</span>
+                                        <span class="badge bg-info">Pengeditan</span>
                                     @elseif($task->status == 'peninjauan')
                                         <span class="badge bg-warning">Peninjauan</span>
                                     @endif
                                 </p>
 
-                                <p class="card-text"><strong>Assign To:</strong> {{ $task->user->name }}</p>
+                                <!-- <p class="card-text"><strong>Assign To:</strong> {{ $task->user->name }}</p> -->
 
+                                @if(Auth::user()->isMember())
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#editTaskModal"> <i class="bi bi-pencil-square"></i> </button>
+                                @endif
                                 <a href="{{ route('projects.tasks.index', $task->project->id) }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-90deg-left"></i> </a>
                             </div>
@@ -56,14 +58,16 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class="col-md-12 mt-3">
+                            <!-- <div class="col-md-12 mt-3">
                                 <div class="d-flex justify-content-between align-items-center border-top pt-2">
                                     <h5>Checklist</h5>
+                                    @if(Auth::user()->isMember())
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#addChecklistModal"> <i class="bi bi-plus-circle"></i> </button>
+                                    @endif
                                 </div>
 
-                                <!-- Checklist items -->
+                                <!-- Checklist items
                                 <ul class="list-group mt-2" id="checklist-items">
                                     @foreach ($task->checklistItems as $item)
                                         <li class="list-group-item d-flex justify-content-between align-items-center"
@@ -76,6 +80,7 @@
                                                 <label
                                                     class="form-check-label {{ $item->completed ? 'text-decoration-line-through' : '' }}">{{ $item->name }}</label>
                                             </div>
+                                            @if(Auth::user()->isMember())
                                             <div>
                                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#editChecklistModal-{{ $item->id }}"><i
@@ -84,9 +89,10 @@
                                                     onclick="deleteChecklistItem({{ $item->id }})"><i
                                                         class="bi bi-trash"></i></button>
                                             </div>
+                                            @endif
                                         </li>
 
-                                        <!-- Edit Checklist Modal -->
+                                        <!-- Edit Checklist Modal 
                                     @endforeach
                                 </ul>
                                 {{-- <div class="modal fade" id="editChecklistModal-{{ $item->id }}" tabindex="-1"
@@ -128,7 +134,7 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

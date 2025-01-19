@@ -14,7 +14,7 @@ class ReminderController extends Controller
     {
         $this->middleware('auth');
         // Add admin middleware only to admin actions
-        $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('member')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
@@ -54,13 +54,24 @@ class ReminderController extends Controller
 
     public function create()
     {
-        try {
-            $selectedDate = request('date') ?? now()->format('Y-m-d');
-            return view('reminders.create', compact('selectedDate'));
-        } catch (\Exception $e) {
-            report($e);
-            return back()->withErrors(['error' => 'Failed to load create form. Please try again.']);
+        // Enhanced logging for role checking
+        \Illuminate\Support\Facades\Log::info('Reminder Create Access Attempt', [
+            'user_id' => auth()->id(),
+            'user_email' => auth()->user()->email,
+            'user_role' => auth()->user()->role,
+            'is_member' => auth()->user()->isMember(),
+        ]);
+
+        // Explicit role check
+        if (!auth()->user()->isMember()) {
+            return redirect()->route('reminders.index')
+                ->withErrors(['error' => 'You do not have permission to create reminders.']);
         }
+
+        // Ensure selected date is always set
+        $selectedDate = request('date') ?? now()->format('Y-m-d');
+        
+        return view('reminders.create', compact('selectedDate'));
     }
 
     public function store(Request $request)

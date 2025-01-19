@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(!Auth::user()->isAdmin())
+    @if(!Auth::user()->isMember())
         <script>window.location = "{{ route('reminders.index') }}";</script>
     @endif
     

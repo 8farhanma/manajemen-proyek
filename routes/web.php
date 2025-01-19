@@ -13,6 +13,7 @@ use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\UserController; // Added this line
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,14 +44,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('routines/monthly', [RoutineController::class, 'showMonthly'])->name('routines.showMonthly');
     Route::resource('files', FileController::class);
     Route::resource('notes', NoteController::class);
-    Route::prefix('reminders')->name('reminders.')->middleware('auth')->group(function () {
-        Route::get('/', [ReminderController::class, 'index'])->name('index');
-        Route::get('/create', [ReminderController::class, 'create'])->name('create')->middleware('admin');
-        Route::post('/', [ReminderController::class, 'store'])->name('store')->middleware('admin');
-        Route::get('/{reminder}/edit', [ReminderController::class, 'edit'])->name('edit')->middleware('admin');
-        Route::put('/{reminder}', [ReminderController::class, 'update'])->name('update')->middleware('admin');
-        Route::delete('/{reminder}', [ReminderController::class, 'destroy'])->name('destroy')->middleware('admin');
-        Route::get('/{reminder}', [ReminderController::class, 'show'])->name('show');
+    Route::prefix('reminders')->name('reminders.')->middleware(['auth', 'member'])->group(function () {
+        Route::get('/', [ReminderController::class, 'index'])->name('index')->withoutMiddleware('member');
+        Route::get('/create', [ReminderController::class, 'create'])->name('create');
+        Route::post('/', [ReminderController::class, 'store'])->name('store');
+        Route::get('/{reminder}/edit', [ReminderController::class, 'edit'])->name('edit');
+        Route::put('/{reminder}', [ReminderController::class, 'update'])->name('update');
+        Route::delete('/{reminder}', [ReminderController::class, 'destroy'])->name('destroy');
+        Route::get('/{reminder}', [ReminderController::class, 'show'])->name('show')->withoutMiddleware('member');
     });
     Route::resource('checklist-items', ChecklistItemController::class);
     Route::get('checklist-items/{checklistItem}/update-status', [ChecklistItemController::class, 'updateStatus'])->name('checklist-items.update-status');
@@ -58,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
     // Content routes
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');
     Route::post('/content', [ContentController::class, 'store'])->name('content.store');
+    Route::put('/content/{id}', [ContentController::class, 'update'])->name('content.update');
+    Route::delete('/content/{id}', [ContentController::class, 'destroy'])->name('content.destroy');
     Route::post('/content/{id}/like', [ContentController::class, 'like'])->name('content.like');
     Route::post('/content/{id}/comment', [ContentController::class, 'comment'])->name('content.comment');
     Route::post('/content/{id}/view', [ContentController::class, 'view'])->name('content.view');
@@ -69,8 +72,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/content/ideal-solutions', [ContentController::class, 'showIdealSolutions'])->name('content.ideal-solutions');
     Route::get('/content/separation-measures', [ContentController::class, 'showSeparationMeasures'])->name('content.separation-measures');
     Route::get('/content/relative-closeness', [ContentController::class, 'showRelativeCloseness'])->name('content.relative-closeness');
+    Route::get('/topsis', [App\Http\Controllers\ContentController::class, 'topsis'])->name('topsis');
 
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.dashboard');
+
+    Route::get('/profile/edit', function () {
+        return view('auth.edit');
+    })->name('profile.edit');
+
+    Route::post('/profile/update', [UserController::class, 'update'])->name('profile.update');
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });

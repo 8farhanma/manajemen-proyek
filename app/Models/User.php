@@ -143,6 +143,10 @@ class User extends Authenticatable
      */
     public function isMember()
     {
+        \Illuminate\Support\Facades\Log::info('Role check', [
+            'current_role' => $this->role,
+            'is_member' => $this->role === 'member'
+        ]);
         return $this->role === 'member';
     }
 }

@@ -19,7 +19,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center bg-white shadow-sm p-3 rounded mb-4">
         <h2>Reminders</h2>
-        @if(Auth::user()->isAdmin())
+        @if(Auth::user()->isMember())
             <a href="{{ route('reminders.create') }}" class="btn btn-primary">Add Reminder</a>
         @endif
     </div>
@@ -59,13 +59,13 @@
                     <div class="modal-date"></div>
                 </div>
                 <div class="reminder-detail">
-                    <label>Time</label>
-                    <div class="modal-time"></div>
+                    <label class="fw-bold text-muted mb-1">Time</label>
+                    <div class="modal-time badge bg-primary text-white p-2"></div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                @if(Auth::user()->isAdmin())
+                @if(Auth::user()->isMember())
                     <div class="action-buttons">
                         <form id="deleteReminderForm" method="POST" class="d-inline">
                             @csrf
@@ -74,7 +74,7 @@
                                 <i class="bi bi-trash"></i> Delete
                             </button>
                         </form>
-                        <a href="#" class="btn btn-warning edit-reminder">
+                        <a href="#" class="btn btn-warning edit-reminder" data-bs-dismiss="modal">
                             <i class="bi bi-pencil-square"></i> Edit
                         </a>
                     </div>
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 @push('scripts')
 <script>
 // Add admin class to body if user is admin
-document.body.classList.toggle('is-admin', {{ Auth::user()->isAdmin() ? 'true' : 'false' }});
+document.body.classList.toggle('is-admin', {{ Auth::user()->isMember() ? 'true' : 'false' }});
 </script>
 <script src="{{ asset('js/calendar.js') }}"></script>
 <script>
@@ -117,15 +117,50 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.querySelector('.modal-title').textContent = reminder.title;
             modal.querySelector('.modal-description').textContent = reminder.description || 'No description';
             modal.querySelector('.modal-date').textContent = reminder.date;
-            modal.querySelector('.modal-time').textContent = reminder.time;
+            
+            // Format time nicely
+            const timeElement = modal.querySelector('.modal-time');
+            const formatTime = (timeString) => {
+                if (!timeString) return 'No time set';
+                
+                // Try different parsing approaches
+                try {
+                    // Remove any seconds or extra formatting
+                    const cleanTime = timeString.split(':').slice(0, 2).join(':');
+                    
+                    // Parse time with various methods
+                    const timeParts = cleanTime.split(':');
+                    const hours = parseInt(timeParts[0], 10);
+                    const minutes = parseInt(timeParts[1], 10);
+                    
+                    // Create a valid date object
+                    const timeDate = new Date();
+                    timeDate.setHours(hours, minutes, 0, 0);
+                    
+                    // Format time
+                    return timeDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                } catch (error) {
+                    console.error('Time parsing error:', error);
+                    return 'Invalid time';
+                }
+            };
+            
+            timeElement.textContent = formatTime(reminder.time);
 
-            @if(Auth::user()->isAdmin())
+            @if(Auth::user()->isMember())
             // Update action buttons
             const editButton = modal.querySelector('.edit-reminder');
             const deleteForm = modal.querySelector('#deleteReminderForm');
             
+            // Set edit and delete URLs
             editButton.href = `/reminders/${reminder.id}/edit`;
             deleteForm.action = `/reminders/${reminder.id}`;
+
+            // Add click event to edit button to ensure navigation
+            editButton.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+                window.location.href = this.href; // Navigate to edit page
+            });
 
             // Handle delete confirmation
             const deleteButton = modal.querySelector('.delete-reminder');

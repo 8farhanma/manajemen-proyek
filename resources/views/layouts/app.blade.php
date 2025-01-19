@@ -12,8 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" />
     @stack('styles')
@@ -34,7 +33,7 @@
 
         .sidebar {
             width: 250px;
-            background-color: #343a40;
+            background-color: #E8EAF6;
             color: white;
             flex-shrink: 0;
             display: flex;
@@ -42,19 +41,19 @@
         }
 
         .sidebar .nav-link {
-            color: white;
+            color: black;
             text-decoration: none;
             display: flex;
             align-items: center;
             padding: 10px;
-            border-bottom: 1px solid #495057;
+            border-bottom: 1px solid #1c7eff;
         }
 
-        .sidebar .nav-link:hover,
+        /* .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            background-color: #495057;
+            background-color: #1c7eff;
             border-radius: 0.25rem;
-        }
+        } */
 
         .sidebar .nav-link .bi {
             margin-right: 10px;
@@ -76,11 +75,11 @@
 
         .navbar-brand {
             font-weight: bold;
-            color: #343a40;
+            color: #091A60;
         }
 
         .navbar-nav .nav-link {
-            color: #343a40;
+            color: #091A60;
         }
 
         .navbar-nav .nav-link:hover {
@@ -108,9 +107,7 @@
     <div class="sidebar d-flex flex-column p-3">
         <h4 class="mb-4 text-center">
             <a href="{{ route('dashboard') }}">
-                <img style=" filter: invert(100%) brightness(200%);"
-                    src="{{ asset('assets/img/logo-circle-horizontal.png') }}" class="img-fluid" width="100%"
-                    alt="task manager">
+                <img src="{{ asset('assets/img/LOGO_TAPPP.png') }}" class="img-fluid" width="100%" alt="task manager" style="filter: none;">
             </a>
         </h4>
         <ul class="nav flex-column">
@@ -135,6 +132,7 @@
                     <i class="bi bi-check2-square"></i> Tasks
                 </a>
             </li> --}}
+            @if(Auth::user()->isMember())
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('routines*') ? 'active' : '' }}"
                     href="{{ route('routines.index') }}">
@@ -146,43 +144,26 @@
                     <i class="bi bi-sticky"></i> Notes
                 </a>
             </li>
+            @endif
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('reminders*') ? 'active' : '' }}"
                     href="{{ route('reminders.index') }}">
                     <i class="bi bi-bell"></i> Reminders
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                @php
-                    $hasContent = \App\Models\Content::count() > 0;
-                    $disabledClass = !$hasContent ? 'disabled text-muted' : '';
-                @endphp
-                <a class="nav-link dropdown-toggle {{ request()->is('content*') ? 'active' : '' }}" href="#" 
-                    id="contentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @if(Auth::user()->isMember())
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('content*') ? 'active' : '' }}"
+                    href="{{ route('content.index') }}">
                     <i class="bi bi-collection"></i> Content
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="contentDropdown">
-                    <li><a class="dropdown-item" href="{{ route('content.index') }}">Content Management</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.normalization-divisors') : '#' }}" 
-                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Pembagi Normalisasi</a></li>
-                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.normalized-matrix') : '#' }}"
-                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Tabel Ternormalisasi</a></li>
-                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.weighted-normalized-matrix') : '#' }}"
-                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Tabel Ternormalisasi Terbobot</a></li>
-                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.ideal-solutions') : '#' }}"
-                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Solusi Ideal Positif dan Negatif</a></li>
-                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.separation-measures') : '#' }}"
-                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Jarak Ideal Positif dan Negatif</a></li>
-                    <li><a class="dropdown-item {{ $disabledClass }}" href="{{ $hasContent ? route('content.relative-closeness') : '#' }}"
-                        @if(!$hasContent) onclick="event.preventDefault(); alert('Please add some content first.');" @endif>Kedekatan Relatif</a></li>
-                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('files*') ? 'active' : '' }}" href="{{ route('files.index') }}">
                     <i class="bi bi-file"></i> Files
                 </a>
             </li>
+            @endif
             <!-- <li class="nav-item">
                 <a class="nav-link {{ request()->is('analytics') ? 'active' : '' }}" href="{{ route('analytics.dashboard') }}">
                     <i class="bi bi-bar-chart"></i> Analytics
@@ -210,7 +191,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a></li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                             @csrf

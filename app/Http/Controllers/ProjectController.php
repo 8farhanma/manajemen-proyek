@@ -10,7 +10,12 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Auth::user()->projects()->withCount(['tasks as perencanaan_tasks' => function ($query) {
+        $projects = Project::where(function($query) {
+            $query->where('user_id', Auth::id())
+                  ->orWhereHas('users', function($q) {
+                      $q->where('users.id', Auth::id());
+                  });
+        })->withCount(['tasks as perencanaan_tasks' => function ($query) {
             $query->where('status', 'perencanaan');
         }, 'tasks as pembuatan_tasks' => function ($query) {
             $query->where('status', 'pembuatan');
@@ -82,13 +87,18 @@ class ProjectController extends Controller
 
     public function addMember(Request $request)
     {
+        if (!Auth::user()->isMember()) {
+            abort(403, 'Only members can add team members to projects.');
+        }
+
         $request->validate([
             'project_id' => 'required|exists:projects,id',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id'
         ]);
 
-        $project = Project::find($request->project_id);
-        $project->teamProjects()->attach($request->user_id);
-        return redirect()->back()->with('success', 'User added successfully.');
+        $project = Project::findOrFail($request->project_id);
+        $project->users()->attach($request->user_id);
+
+        return redirect()->back()->with('success', 'Team member added successfully.');
     }
 }

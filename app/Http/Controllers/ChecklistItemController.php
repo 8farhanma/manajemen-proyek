@@ -7,6 +7,20 @@ use Illuminate\Http\Request;
 
 class ChecklistItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (!auth()->user()->isMember()) {
+                if ($request->ajax()) {
+                    return response()->json(['error' => 'Unauthorized. Only members can manage checklist items.'], 403);
+                }
+                abort(403, 'Unauthorized. Only members can manage checklist items.');
+            }
+            return $next($request);
+        });
+    }
+
     public function store(Request $request)
     {
         $request->validate([

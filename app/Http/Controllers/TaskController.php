@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $project = $request->route('project');
+            if ($project && !($project->user_id === Auth::id() || $project->users->contains(Auth::id()))) {
+                abort(403, 'Unauthorized action.');
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Project $project)
     {
         $tasks = $project->tasks()->get()->groupBy('status');
@@ -17,6 +29,10 @@ class TaskController extends Controller
 
     public function store(Request $request, Project $project)
     {
+        if (!Auth::user()->isMember()) {
+            abort(403, 'Only members can create tasks.');
+        }
+
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',

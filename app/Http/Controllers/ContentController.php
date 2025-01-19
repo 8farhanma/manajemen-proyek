@@ -166,4 +166,85 @@ class ContentController extends Controller
             'results' => $results
         ]);
     }
+
+    public function topsis()
+    {
+        $topsis = $this->initializeTopsis();
+        $topsis->calculate();
+        
+        // Get normalized matrix
+        $normalizedMatrix = $topsis->getNormalizedMatrix();
+        
+        // Get weighted normalized matrix
+        $weightedMatrix = $topsis->getWeightedNormalizedMatrix();
+        
+        // Get ideal solutions
+        [$idealPositive, $idealNegative] = $topsis->getIdealSolutions($weightedMatrix);
+        
+        // Get separation measures
+        [$distancePositive, $distanceNegative] = $topsis->getDistances();
+        
+        // Get relative closeness and results
+        $results = $topsis->calculate();
+        
+        // Get alternatives (content titles)
+        $alternatives = Content::all()->pluck('title')->toArray();
+        
+        return view('content.topsis', [
+            'divisors' => $topsis->getNormalizationDivisors(),
+            'normalizedMatrix' => array_combine($alternatives, $normalizedMatrix),
+            'weightedMatrix' => $weightedMatrix,
+            'alternatives' => $alternatives,
+            'criteria' => ['Likes', 'Comments', 'Views'],
+            'idealPositive' => $idealPositive,
+            'idealNegative' => $idealNegative,
+            'distancePositive' => $distancePositive,
+            'distanceNegative' => $distanceNegative,
+            'results' => array_map(function($alt, $score) {
+                return ['alternative' => $alt, 'score' => $score];
+            }, $alternatives, array_column($results, 'score'))
+        ]);
+    }
+
+    /**
+     * Update the specified content.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $content = Content::findOrFail($id);
+        
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'views' => 'nullable|integer|min:0',
+            'likes' => 'nullable|integer|min:0',
+            'comments' => 'nullable|integer|min:0',
+        ]);
+
+        $content->update($validated);
+
+        return redirect()->route('content.index')
+            ->with('success', 'Content updated successfully');
+    }
+
+    /**
+     * Remove the specified content.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $content = Content::findOrFail($id);
+        $content->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Content deleted successfully'
+        ]);
+    }
 }

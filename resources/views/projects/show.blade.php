@@ -47,8 +47,10 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title"> Team Members </h5>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#addMemberModal"> <i class="bi bi-plus-circle"></i> </button>
+                            @if(Auth::user()->isMember())
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addMemberModal"> <i class="bi bi-plus-circle"></i> </button>
+                            @endif
                         </div>
 
                         <div class="row">
@@ -73,6 +75,7 @@
         </div>
     </div>
 
+    @if(Auth::user()->isMember())
     <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,4 +105,5 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection

@@ -4,29 +4,86 @@
 @endsection
 @section('content')
     <style>
+        .kanban-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+            min-height: calc(100vh - 200px);
+        }
+        
         .kanban-column {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            height: 100%;
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
         }
 
         .kanban-list {
-            min-height: 500px;
-            background-color: #e9ecef;
-            border-radius: 5px;
-            padding: 10px;
+            padding: 1rem;
+            min-height: 100px;
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
         }
 
         .kanban-item {
             cursor: move;
         }
 
-        .kanban-item.invisible {
-            opacity: 0.4;
+        /* Custom scrollbar untuk tampilan yang lebih baik */
+        .kanban-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .kanban-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .kanban-list::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .kanban-list::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1400px) {
+            .kanban-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .kanban-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kanban-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
         }
     </style>
-    <div class="container">
+
+    <div class="container-fluid px-4">
         <div class="bg-white align-items-center mb-4 shadow-sm p-3 rounded">
             <h2 class="text-center">{{ $project->name }} - Tasks</h2>
         </div>
@@ -37,131 +94,126 @@
             </div>
         @endif
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="kanban-column">
-                    <div
-                        class="d-flex justify-content-between bg-success text-white shadow-sm align-items-center px-3 py-2 rounded-top">
-                        <h4 class="text-white fw-bolder m-0">Perencanaan</h4>
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
-                            data-status="perencanaan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
-                    </div>
+        <div class="kanban-container">
+            <div class="kanban-column">
+                <div class="d-flex justify-content-between bg-success text-white shadow-sm align-items-center px-3 py-2 rounded-top">
+                    <h4 class="text-white fw-bolder m-0">Perencanaan</h4>
+                    @if(Auth::user()->isMember())
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
+                        data-status="perencanaan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
+                    @endif
+                </div>
 
-                    <div class="kanban-list" id="perencanaan">
-                        @foreach ($tasks['perencanaan'] ?? [] as $task)
-                            <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        {{ $task->title }}
-                                    </h5>
-
-                                    <p class="card-text">{{ $task->description }}</p>
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary btn-sm"><i
-                                            class="bi bi-eye"></i></a>
-                                </div>
+                <div class="kanban-list" id="perencanaan">
+                    @foreach ($tasks['perencanaan'] ?? [] as $task)
+                        <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $task->title }}</h5>
+                                <p class="card-text">{{ $task->description }}</p>
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-success btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="kanban-column">
-                    <div
-                        class="d-flex justify-content-between shadow-sm align-items-center bg-success px-3 py-2 rounded-top">
-                        <h4 class="text-white fw-bolder m-0">Pembuatan</h4>
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal"
-                            data-bs-target="#createTaskModal" data-status="pembuatan"
-                            style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
-                    </div>
+            <div class="kanban-column">
+                <div class="d-flex justify-content-between bg-primary text-white shadow-sm align-items-center px-3 py-2 rounded-top">
+                    <h4 class="text-white fw-bolder m-0">Pembuatan</h4>
+                    @if(Auth::user()->isMember())
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
+                        data-status="pembuatan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
+                    @endif
+                </div>
 
-                    <div class="kanban-list" id="pembuatan">
-                        @foreach ($tasks['pembuatan'] ?? [] as $task)
-                            <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $task->title }}</h5>
-                                    <p class="card-text">{{ $task->description }}</p>
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-warning btn-sm"><i
-                                            class="bi bi-eye"></i></a>
-                                </div>
+                <div class="kanban-list" id="pembuatan">
+                    @foreach ($tasks['pembuatan'] ?? [] as $task)
+                        <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $task->title }}</h5>
+                                <p class="card-text">{{ $task->description }}</p>
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="kanban-column">
-                    <div
-                        class="d-flex justify-content-between shadow-sm align-items-center bg-success px-3 py-2 rounded-top">
-                        <h4 class="text-white fw-bolder m-0">Pengeditan</h4>
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal"
-                            data-bs-target="#createTaskModal" data-status="pengeditan"
-                            style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
-                    </div>
-                    <div class="kanban-list" id="pengeditan">
-                        @foreach ($tasks['pengeditan'] ?? [] as $task)
-                            <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $task->title }}</h5>
-                                    <p class="card-text">{{ $task->description }}</p>
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-success btn-sm"><i
-                                            class="bi bi-eye"></i></a>
-                                </div>
+            <div class="kanban-column">
+                <div class="d-flex justify-content-between bg-info text-white shadow-sm align-items-center px-3 py-2 rounded-top">
+                    <h4 class="text-white fw-bolder m-0">Pengeditan</h4>
+                    @if(Auth::user()->isMember())
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
+                        data-status="pengeditan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
+                    @endif
+                </div>
+
+                <div class="kanban-list" id="pengeditan">
+                    @foreach ($tasks['pengeditan'] ?? [] as $task)
+                        <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $task->title }}</h5>
+                                <p class="card-text">{{ $task->description }}</p>
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-info btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="kanban-column">
-                    <div
-                        class="d-flex justify-content-between shadow-sm align-items-center bg-success px-3 py-2 rounded-top">
-                        <h4 class="text-white fw-bolder m-0">Peninjauan</h4>
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal"
-                            data-bs-target="#createTaskModal" data-status="peninjauan"
-                            style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
-                    </div>
-                    <div class="kanban-list" id="peninjauan">
-                        @foreach ($tasks['peninjauan'] ?? [] as $task)
-                            <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $task->title }}</h5>
-                                    <p class="card-text">{{ $task->description }}</p>
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-success btn-sm"><i
-                                            class="bi bi-eye"></i></a>
-                                </div>
+            <div class="kanban-column">
+                <div class="d-flex justify-content-between bg-warning text-white shadow-sm align-items-center px-3 py-2 rounded-top">
+                    <h4 class="text-white fw-bolder m-0">Peninjauan</h4>
+                    @if(Auth::user()->isMember())
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
+                        data-status="peninjauan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
+                    @endif
+                </div>
+
+                <div class="kanban-list" id="peninjauan">
+                    @foreach ($tasks['peninjauan'] ?? [] as $task)
+                        <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $task->title }}</h5>
+                                <p class="card-text">{{ $task->description }}</p>
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="kanban-column">
-                    <div
-                        class="d-flex justify-content-between shadow-sm align-items-center bg-success px-3 py-2 rounded-top">
-                        <h4 class="text-white fw-bolder m-0">Publikasi</h4>
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal"
-                            data-bs-target="#createTaskModal" data-status="publikasi"
-                            style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
-                    </div>
-                    <div class="kanban-list" id="publikasi">
-                        @foreach ($tasks['publikasi'] ?? [] as $task)
-                            <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $task->title }}</h5>
-                                    <p class="card-text">{{ $task->description }}</p>
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-success btn-sm"><i
-                                            class="bi bi-eye"></i></a>
-                                </div>
+            <div class="kanban-column">
+                <div class="d-flex justify-content-between bg-danger text-white shadow-sm align-items-center px-3 py-2 rounded-top">
+                    <h4 class="text-white fw-bolder m-0">Publikasi</h4>
+                    @if(Auth::user()->isMember())
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
+                        data-status="publikasi" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
+                    @endif
+                </div>
+
+                <div class="kanban-list" id="publikasi">
+                    @foreach ($tasks['publikasi'] ?? [] as $task)
+                        <div class="card mb-3 kanban-item" data-id="{{ $task->id }}" draggable="true">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $task->title }}</h5>
+                                <p class="card-text">{{ $task->description }}</p>
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-
         </div>
 
         <!-- Create Task Modal -->
@@ -198,7 +250,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="user_id" class="form-label">Assign To</label>
                                 <select name="user_id" id="user_id" class="form-select">
                                     <option value="{{ auth()->user()->id }}">Self</option>
@@ -209,7 +261,7 @@
                                 @error('user_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
                             <input type="hidden" name="status" id="task_status">
 
                         </div>

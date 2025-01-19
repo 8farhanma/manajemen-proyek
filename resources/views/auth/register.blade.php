@@ -21,16 +21,12 @@
         }
 
         .card-header {
-            background-color: #495057;
+            background-color: #E8EAF6;
             color: white;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             font-size: 1.25rem;
             font-weight: 500;
-        }
-
-        .card-header img {
-            filter: invert(100%) brightness(200%);
         }
 
         .btn-primary {
@@ -52,7 +48,7 @@
             <div class="col-md-5">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header text-center p-4">
-                        <img src="{{ asset('assets/img/logo-horizontal.png') }}" class="img-fluid" alt="task manager">
+                        <img src="{{ asset('assets/img/LOGO_TAPPP.png') }}" class="img-fluid" alt="task manager">
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
