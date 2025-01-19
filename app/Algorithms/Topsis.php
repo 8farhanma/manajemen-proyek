@@ -125,9 +125,10 @@ class Topsis
             }
         }
 
-        // Store the divisors
+        // Store the divisors, ensuring no division by zero
         foreach ($columnSums as $j => $sum) {
-            $this->columnDivisors[$this->criteria[$j]] = sqrt($sum);
+            // If sum is 0, all values in column are 0, so divisor will be 1 to maintain 0 values
+            $this->columnDivisors[$this->criteria[$j]] = $sum > 0 ? sqrt($sum) : 1;
         }
 
         // Calculate normalized values
