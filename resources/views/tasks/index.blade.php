@@ -98,7 +98,7 @@
             <div class="kanban-column">
                 <div class="d-flex justify-content-between bg-success text-white shadow-sm align-items-center px-3 py-2 rounded-top">
                     <h4 class="text-white fw-bolder m-0">Perencanaan</h4>
-                    @if(Auth::user()->isMember())
+                    @if(Auth::user()->isMember() && !Auth::user()->isCeo())
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
                         data-status="perencanaan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
                     @endif
@@ -122,7 +122,7 @@
             <div class="kanban-column">
                 <div class="d-flex justify-content-between bg-primary text-white shadow-sm align-items-center px-3 py-2 rounded-top">
                     <h4 class="text-white fw-bolder m-0">Pembuatan</h4>
-                    @if(Auth::user()->isMember())
+                    @if(Auth::user()->isMember() && !Auth::user()->isCeo())
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
                         data-status="pembuatan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
                     @endif
@@ -146,7 +146,7 @@
             <div class="kanban-column">
                 <div class="d-flex justify-content-between bg-info text-white shadow-sm align-items-center px-3 py-2 rounded-top">
                     <h4 class="text-white fw-bolder m-0">Pengeditan</h4>
-                    @if(Auth::user()->isMember())
+                    @if(Auth::user()->isMember() && !Auth::user()->isCeo())
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
                         data-status="pengeditan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
                     @endif
@@ -170,7 +170,7 @@
             <div class="kanban-column">
                 <div class="d-flex justify-content-between bg-warning text-white shadow-sm align-items-center px-3 py-2 rounded-top">
                     <h4 class="text-white fw-bolder m-0">Peninjauan</h4>
-                    @if(Auth::user()->isMember())
+                    @if(Auth::user()->isMember() && !Auth::user()->isCeo())
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
                         data-status="peninjauan" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
                     @endif
@@ -194,7 +194,7 @@
             <div class="kanban-column">
                 <div class="d-flex justify-content-between bg-danger text-white shadow-sm align-items-center px-3 py-2 rounded-top">
                     <h4 class="text-white fw-bolder m-0">Publikasi</h4>
-                    @if(Auth::user()->isMember())
+                    @if(Auth::user()->isMember() && !Auth::user()->isCeo())
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createTaskModal"
                         data-status="publikasi" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">+</button>
                     @endif
@@ -250,20 +250,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <!-- <div class="mb-3">
-                                <label for="user_id" class="form-label">Assign To</label>
-                                <select name="user_id" id="user_id" class="form-select">
-                                    <option value="{{ auth()->user()->id }}">Self</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('user_id')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> -->
                             <input type="hidden" name="status" id="task_status">
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

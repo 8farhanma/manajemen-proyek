@@ -6,7 +6,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center bg-white mb-4 shadow-sm p-3 rounded">
             <h2>Projects</h2>
-            @if (Auth::user() && Auth::user()->isMember())
+            @if (Auth::user() && Auth::user()->isMember() && !Auth::user()->isCeo())
                 <a href="{{ route('projects.create') }}" class="btn btn-primary">Add Project</a>
             @endif
         </div>
@@ -46,7 +46,7 @@
                             </a>
 
                             {{-- Show edit and delete buttons only to members --}}
-                            @if (Auth::user() && Auth::user()->isMember())
+                            @if (Auth::user() && Auth::user()->isMember() && !Auth::user()->isCeo())
                                 <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>

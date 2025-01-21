@@ -149,4 +149,12 @@ class User extends Authenticatable
         ]);
         return $this->role === 'member';
     }
+
+    /**
+     * Check if user is CEO
+     */
+    public function isCeo()
+    {
+        return $this->role === 'ceo';
+    }
 }

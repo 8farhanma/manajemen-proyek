@@ -8,24 +8,54 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->isCeo()) {
+                // Allow only index and show methods for CEO
+                if (!in_array($request->route()->getActionMethod(), ['index', 'show'])) {
+                    abort(403, 'CEO role can only view projects.');
+                }
+            }
+            return $next($request);
+        })->except(['index', 'show']);
+    }
+
     public function index()
     {
-        $projects = Project::where(function($query) {
-            $query->where('user_id', Auth::id())
-                  ->orWhereHas('users', function($q) {
-                      $q->where('users.id', Auth::id());
-                  });
-        })->withCount(['tasks as perencanaan_tasks' => function ($query) {
-            $query->where('status', 'perencanaan');
-        }, 'tasks as pembuatan_tasks' => function ($query) {
-            $query->where('status', 'pembuatan');
-        }, 'tasks as pengeditan_tasks' => function ($query) {
-            $query->where('status', 'pengeditan');
-        }, 'tasks as peninjauan_tasks' => function ($query) {
-            $query->where('status', 'peninjauan');
-        }, 'tasks as publikasi_tasks' => function ($query) {
-            $query->where('status', 'publikasi');
-        }])->get();
+        if (Auth::user()->isCeo()) {
+            // CEO can see all projects
+            $projects = Project::withCount(['tasks as perencanaan_tasks' => function ($query) {
+                $query->where('status', 'perencanaan');
+            }, 'tasks as pembuatan_tasks' => function ($query) {
+                $query->where('status', 'pembuatan');
+            }, 'tasks as pengeditan_tasks' => function ($query) {
+                $query->where('status', 'pengeditan');
+            }, 'tasks as peninjauan_tasks' => function ($query) {
+                $query->where('status', 'peninjauan');
+            }, 'tasks as publikasi_tasks' => function ($query) {
+                $query->where('status', 'publikasi');
+            }])->get();
+        } else {
+            // Other users see only their projects
+            $projects = Project::where(function($query) {
+                $query->where('user_id', Auth::id())
+                      ->orWhereHas('users', function($q) {
+                          $q->where('users.id', Auth::id());
+                      });
+            })->withCount(['tasks as perencanaan_tasks' => function ($query) {
+                $query->where('status', 'perencanaan');
+            }, 'tasks as pembuatan_tasks' => function ($query) {
+                $query->where('status', 'pembuatan');
+            }, 'tasks as pengeditan_tasks' => function ($query) {
+                $query->where('status', 'pengeditan');
+            }, 'tasks as peninjauan_tasks' => function ($query) {
+                $query->where('status', 'peninjauan');
+            }, 'tasks as publikasi_tasks' => function ($query) {
+                $query->where('status', 'publikasi');
+            }])->get();
+        }
 
         return view('projects.index', compact('projects'));
     }
@@ -37,6 +67,10 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user()->isCeo()) {
+            abort(403, 'CEO role cannot create projects.');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -57,6 +91,7 @@ class ProjectController extends Controller
         $users = User::all();
         return view('projects.show', compact('project', 'teamMembers', 'users'));
     }
+
     public function edit(Project $project)
     {
         return view('projects.edit', compact('project'));
@@ -64,6 +99,10 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
+        if (Auth::user()->isCeo()) {
+            abort(403, 'CEO role cannot update projects.');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -80,6 +119,10 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        if (Auth::user()->isCeo()) {
+            abort(403, 'CEO role cannot delete projects.');
+        }
+
         $project->delete();
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');

@@ -12,6 +12,11 @@ class TaskController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
+            // If user is CEO, allow access to all tasks
+            if (Auth::user()->isCeo()) {
+                return $next($request);
+            }
+
             $project = $request->route('project');
             if ($project && !($project->user_id === Auth::id() || $project->users->contains(Auth::id()))) {
                 abort(403, 'Unauthorized action.');
@@ -34,13 +39,16 @@ class TaskController extends Controller
         }
 
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
+            'status' => 'required|string'
         ]);
 
-        $project->tasks()->create($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::id(); // Set the user_id to the authenticated user
+
+        $project->tasks()->create($data);
 
         return redirect()->route('projects.tasks.index', $project)->with('success', 'Task created successfully.');
     }
